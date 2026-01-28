@@ -80,6 +80,7 @@ class Game2048 {
             this.applyTheme(theme);
             this.saveTheme(theme);
             this.render();
+            this.themeSelect.blur();
         });
         let touchStartX;
         let touchStartY;
@@ -323,8 +324,11 @@ class Game2048 {
             this.isAnimating = true;
             this.render();
             setTimeout(() => {
-                this.addRandomTile();
-                this.render();
+                const newTile = this.addRandomTile();
+                // Only render the new tile, don't re-render everything
+                if (newTile) {
+                    this.renderTile(newTile, newTile.row, newTile.col, true, false);
+                }
                 setTimeout(() => {
                     this.isAnimating = false;
                     if (!this.movesAvailable()) {
@@ -476,6 +480,13 @@ class Game2048 {
                 element.style.left = `${targetPos.left}px`;
                 element.classList.add('tile-new');
             }
+            else if (isMerged) {
+                // Merged tile: start hidden at target position, will appear after source tiles merge
+                element.style.top = `${targetPos.top}px`;
+                element.style.left = `${targetPos.left}px`;
+                element.style.opacity = '0';
+                element.style.transform = 'scale(0)';
+            }
             else if (tile.previousRow !== null && tile.previousCol !== null) {
                 // Moving tile: start at previous position
                 const fromPos = this.getCellPosition(tile.previousRow, tile.previousCol);
@@ -496,11 +507,8 @@ class Game2048 {
         element.style.left = `${targetPos.left}px`;
         // Update value and class (for merged tiles)
         if (isMerged) {
-            element.classList.add('tile-merged');
-            // Update value after move animation and remove source tiles
+            // Wait for move animation to complete before showing merge effect
             setTimeout(() => {
-                element.className = `tile ${this.getTileClass(tile.value)} tile-merged`;
-                element.textContent = tile.value.toString();
                 // Remove the source tiles that were merged
                 if (tile.mergedFrom) {
                     tile.mergedFrom.forEach(t => {
@@ -509,6 +517,14 @@ class Game2048 {
                             sourceEl.remove();
                     });
                 }
+                // Show the merged tile with pop animation
+                element.style.opacity = '1';
+                element.style.transform = 'scale(1)';
+                element.classList.add('tile-merged');
+                // Remove tile-merged class after animation completes
+                setTimeout(() => {
+                    element.classList.remove('tile-merged');
+                }, 250);
             }, this.animationDuration);
         }
     }

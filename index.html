@@ -12,7 +12,12 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1 class="title">2048</h1>
+            <h1 class="title">
+                <span class="title-digits">
+                    <span class="digit d-2">2</span><span class="digit d-0">0</span><span class="digit d-4">4</span><span class="digit d-8">8</span>
+                </span>
+                <span class="title-fusion">Fusion</span>
+            </h1>
             <div class="scores">
                 <div class="score-box">
                     <span class="score-label">Score</span>
@@ -27,7 +32,7 @@
 
         <div class="controls">
             <button class="btn" id="new-game">New Game</button>
-            <button class="btn" id="undo" disabled>Undo</button>
+            <button class="btn" id="undo" disabled><span class="undo-text">Undo</span><span class="undo-icon">↩</span></button>
             <div class="theme-selector">
                 <label for="theme">Theme:</label>
                 <select id="theme">
@@ -70,9 +75,12 @@
             </div>
         </div>
 
-        <div class="instructions">
-            <p>Use <strong>arrow keys</strong> or <strong>WASD</strong> to move tiles</p>
-            <p>Press <strong>Z</strong> or <strong>Ctrl+Z</strong> to undo</p>
+        <div class="instructions instructions-desktop">
+            <p>Use <strong>arrow keys</strong> to move tiles</p>
+            <p>Press <strong>Ctrl+Z</strong> to undo</p>
+        </div>
+        <div class="instructions instructions-mobile">
+            <p><strong>Swipe</strong> to move tiles</p>
         </div>
     </div>
 
