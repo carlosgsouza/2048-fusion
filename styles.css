@@ -760,8 +760,12 @@ body {
 /* Neon glow effects */
 .theme-neon .tile {
     box-shadow: var(--tile-shadow);
-    text-shadow: 0 0 10px currentColor;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-shadow: 0 0 5px currentColor;
+    font-family: 'Tilt Neon', sans-serif;
+}
+
+.theme-neon .score-value {
+    font-family: 'Tilt Neon', sans-serif;
 }
 
 .theme-neon .instructions {
