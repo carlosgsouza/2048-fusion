@@ -603,10 +603,17 @@ class Game2048 {
         // Update value and class (for merged tiles)
         if (isMerged) {
             element.classList.add('tile-merged');
-            // Update value after move animation
+            // Update value after move animation and remove source tiles
             setTimeout(() => {
                 element.className = `tile ${this.getTileClass(tile.value)} tile-merged`;
                 element.textContent = tile.value.toString();
+                // Remove the source tiles that were merged
+                if (tile.mergedFrom) {
+                    tile.mergedFrom.forEach(t => {
+                        const sourceEl = this.gridElement.querySelector(`[data-id="${t.id}"]`);
+                        if (sourceEl) sourceEl.remove();
+                    });
+                }
             }, this.animationDuration);
         }
     }
