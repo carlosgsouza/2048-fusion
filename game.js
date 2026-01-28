@@ -76,7 +76,7 @@ class Game2048 {
     }
     getScenarios() {
         // Format: "score_base36-grid_hex" where grid is 16 hex digits (log2 of each cell value)
-        // Tile values: 0=empty, 1=2, 2=4, 3=8, 4=16, 5=32, 6=64, 7=128, 8=256, 9=512, a=1024, b=2048
+        // Tile values: 0=empty, 1=2, 2=4, 3=8, 4=16, 5=32, 6=64, 7=128, 8=256, 9=512, a=1024, b=2048, c=4096
         return {
             '64': '2s-0000000000005500',
             '128': '5k-0000000000006600',
@@ -84,6 +84,8 @@ class Game2048 {
             '512': 'rs-0000000000008800',
             '1024': '1jk-0000000000009900',
             '2048': '334-000000000000aa00',
+            '4096': '668-000000000000bb00',
+            '8192': 'cd0-000000000000cc00',
             'win': '7ps-1234567890aa1234',
             // lose: Grid full except one cell, no adjacent matches possible after any move
             // Row 0: 2,4,8,16  Row 1: 32,64,128,256  Row 2: 2,4,8,16  Row 3: 32,64,128,_
@@ -160,7 +162,6 @@ class Game2048 {
         document.addEventListener('keydown', (e) => this.handleKeyDown(e));
         this.newGameButton.addEventListener('click', () => this.newGame());
         this.undoButton.addEventListener('click', () => this.undo());
-        this.retryButton.addEventListener('click', () => this.newGame());
         this.themeSelect.addEventListener('change', (e) => {
             const theme = e.target.value;
             this.applyTheme(theme);
@@ -357,7 +358,7 @@ class Game2048 {
             return false;
         if (this.gameOver)
             return false;
-        if (this.hasWon)
+        if (this.hasWon && !this.keepPlaying)
             return false;
         this.saveState();
         this.prepareTiles();
@@ -632,7 +633,12 @@ class Game2048 {
         const messageText = this.gameMessage.querySelector('p');
         messageText.textContent = message;
         if (isWin) {
-            this.retryButton.style.display = 'none';
+            this.retryButton.style.display = '';
+            this.retryButton.textContent = 'Keep Playing';
+            this.retryButton.onclick = () => {
+                this.keepPlaying = true;
+                this.hideGameMessage();
+            };
         }
         else {
             this.retryButton.style.display = '';
