@@ -72,7 +72,9 @@ class Game2048 {
     }
 
     private loadTheme(): void {
-        const saved = localStorage.getItem('2048-theme');
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlTheme = urlParams.get('theme');
+        const saved = urlTheme || localStorage.getItem('2048-theme');
         if (saved) {
             this.themeSelect.value = saved;
             this.applyTheme(saved);
@@ -81,6 +83,13 @@ class Game2048 {
 
     private saveTheme(theme: string): void {
         localStorage.setItem('2048-theme', theme);
+        const url = new URL(window.location.href);
+        if (theme === 'classic') {
+            url.searchParams.delete('theme');
+        } else {
+            url.searchParams.set('theme', theme);
+        }
+        window.history.replaceState({}, '', url);
     }
 
     private applyTheme(theme: string): void {
