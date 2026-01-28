@@ -344,6 +344,7 @@ class Game2048 {
         else {
             this.history.pop();
             this.updateUndoButton();
+            this.showInvalidMoveAnimation(direction);
         }
         return moved;
     }
@@ -527,6 +528,16 @@ class Game2048 {
                 }, 250);
             }, this.animationDuration);
         }
+    }
+    showInvalidMoveAnimation(direction) {
+        const gameContainer = document.querySelector('.game-container');
+        gameContainer.classList.remove('shake-left', 'shake-right', 'shake-up', 'shake-down');
+        // Trigger reflow to restart animation
+        gameContainer.offsetHeight;
+        gameContainer.classList.add(`shake-${direction}`);
+        setTimeout(() => {
+            gameContainer.classList.remove(`shake-${direction}`);
+        }, 200);
     }
     showGameMessage(message, isWin = false) {
         const messageText = this.gameMessage.querySelector('p');

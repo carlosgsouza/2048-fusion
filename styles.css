@@ -1344,6 +1344,34 @@ body {
 }
 
 /* Animations */
+.shake-left {
+    animation: shake-horizontal 0.2s ease-in-out;
+}
+
+.shake-right {
+    animation: shake-horizontal 0.2s ease-in-out;
+}
+
+.shake-up {
+    animation: shake-vertical 0.2s ease-in-out;
+}
+
+.shake-down {
+    animation: shake-vertical 0.2s ease-in-out;
+}
+
+@keyframes shake-horizontal {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+@keyframes shake-vertical {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-4px); }
+    75% { transform: translateY(4px); }
+}
+
 .tile-new {
     animation: tile-appear 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
