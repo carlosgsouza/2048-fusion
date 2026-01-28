@@ -50,7 +50,7 @@
     --tile-16: #ff0066;
     --tile-32: #6600ff;
     --tile-64: #00ff66;
-    --tile-128: #ffff00;
+    --tile-128: #e6b800;
     --tile-256: #ff3399;
     --tile-512: #33ff99;
     --tile-1024: #9933ff;
@@ -271,40 +271,40 @@
     --tile-shadow: none;
     --title-color: #0f380f;
     --score-bg: #306230;
-    --font-family: 'Courier New', monospace;
+    --font-family: 'Press Start 2P', 'Courier New', monospace;
     --tile-radius: 0;
-    --tile-font-weight: bold;
+    --tile-font-weight: normal;
     --cell-border: 2px solid #306230;
     --tile-border: none;
 }
 
 /* Cherry Blossom Theme */
 .theme-cherry-blossom {
-    --bg-color: #fff5f5;
-    --container-bg: #ffc0cb;
-    --text-color: #8b4557;
+    --bg-color: #fff0f5;
+    --container-bg: #f48fb1;
+    --text-color: #d63384;
     --text-light: #fff;
-    --btn-bg: #db7093;
-    --btn-hover: #e88aa5;
-    --cell-bg: rgba(255, 255, 255, 0.5);
-    --tile-2: #ffe4e9;
-    --tile-4: #ffd1da;
+    --btn-bg: #ff69b4;
+    --btn-hover: #ff85c1;
+    --cell-bg: rgba(255, 182, 193, 0.7);
+    --tile-2: #ffe4ec;
+    --tile-4: #ffd1dc;
     --tile-8: #ffb6c1;
-    --tile-16: #ffa0b4;
-    --tile-32: #ff8fa8;
-    --tile-64: #ff7096;
-    --tile-128: #ff5a8a;
-    --tile-256: #f0507f;
-    --tile-512: #e04675;
-    --tile-1024: #c73e68;
+    --tile-16: #ff9fb8;
+    --tile-32: #ff85ae;
+    --tile-64: #ff6ba4;
+    --tile-128: #ff519a;
+    --tile-256: #ff3790;
+    --tile-512: #e91e86;
+    --tile-1024: #c2185b;
     --tile-2048: #ffd700;
-    --tile-super: #8b4557;
-    --tile-shadow: 0 2px 8px rgba(219, 112, 147, 0.3);
-    --title-color: #db7093;
-    --score-bg: #ffb6c1;
-    --font-family: 'Georgia', serif;
+    --tile-super: #d63384;
+    --tile-shadow: 0 3px 10px rgba(255, 105, 180, 0.4);
+    --title-color: #ff69b4;
+    --score-bg: #ff69b4;
+    --font-family: 'Dancing Script', 'Pacifico', cursive;
     --tile-radius: 50%;
-    --tile-font-weight: 600;
+    --tile-font-weight: 700;
     --cell-border: none;
     --tile-border: none;
 }
@@ -434,37 +434,6 @@
     --tile-border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
-/* Chalkboard Theme */
-.theme-chalkboard {
-    --bg-color: #2a3a2a;
-    --container-bg: #3a4a3a;
-    --text-color: #e8e8e0;
-    --text-light: #e8e8e0;
-    --btn-bg: #4a5a4a;
-    --btn-hover: #5a6a5a;
-    --cell-bg: #3e4e3e;
-    --tile-2: #e8e8e0;
-    --tile-4: #f0e68c;
-    --tile-8: #ffb6c1;
-    --tile-16: #87ceeb;
-    --tile-32: #98fb98;
-    --tile-64: #dda0dd;
-    --tile-128: #f0e68c;
-    --tile-256: #ffa07a;
-    --tile-512: #87ceeb;
-    --tile-1024: #98fb98;
-    --tile-2048: #fff;
-    --tile-super: #ff6b6b;
-    --tile-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
-    --title-color: #e8e8e0;
-    --score-bg: #4a5a4a;
-    --font-family: 'Comic Sans MS', 'Chalkboard', cursive;
-    --tile-radius: 2px;
-    --tile-font-weight: normal;
-    --cell-border: 2px dashed rgba(232, 232, 224, 0.3);
-    --tile-border: none;
-}
-
 /* Windows XP Theme */
 .theme-winxp {
     --bg-color: #3a6ea5;
@@ -493,38 +462,6 @@
     --tile-radius: 3px;
     --tile-font-weight: bold;
     --cell-border: 1px solid #aca899;
-    --tile-border: none;
-}
-
-/* macOS Theme */
-.theme-macos {
-    --bg-color: linear-gradient(180deg, #b5c7d3 0%, #8fa4b3 100%);
-    --bg-solid: #a0b5c5;
-    --container-bg: rgba(255, 255, 255, 0.85);
-    --text-color: #333;
-    --text-light: #fff;
-    --btn-bg: linear-gradient(180deg, #fafafa 0%, #e0e0e0 100%);
-    --btn-hover: #e8e8e8;
-    --cell-bg: rgba(0, 0, 0, 0.08);
-    --tile-2: #f5f5f7;
-    --tile-4: #e8e8ed;
-    --tile-8: #ff9500;
-    --tile-16: #ff3b30;
-    --tile-32: #ff2d55;
-    --tile-64: #af52de;
-    --tile-128: #5856d6;
-    --tile-256: #007aff;
-    --tile-512: #5ac8fa;
-    --tile-1024: #34c759;
-    --tile-2048: #ffcc00;
-    --tile-super: #ff3b30;
-    --tile-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    --title-color: #333;
-    --score-bg: rgba(0, 0, 0, 0.6);
-    --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
-    --tile-radius: 10px;
-    --tile-font-weight: 600;
-    --cell-border: none;
     --tile-border: none;
 }
 
@@ -569,17 +506,17 @@
     --btn-hover: #ffab91;
     --cell-bg: transparent;
     --tile-2: #ffcdd2;
-    --tile-4: #f8bbd9;
-    --tile-8: #e1bee7;
-    --tile-16: #d1c4e9;
-    --tile-32: #c5cae9;
-    --tile-64: #bbdefb;
-    --tile-128: #b2ebf2;
-    --tile-256: #b2dfdb;
-    --tile-512: #c8e6c9;
-    --tile-1024: #dcedc8;
-    --tile-2048: #fff59d;
-    --tile-super: #ffcc80;
+    --tile-4: #ffe082;
+    --tile-8: #ce93d8;
+    --tile-16: #9fa8da;
+    --tile-32: #81d4fa;
+    --tile-64: #80cbc4;
+    --tile-128: #a5d6a7;
+    --tile-256: #fff176;
+    --tile-512: #ffab91;
+    --tile-1024: #f48fb1;
+    --tile-2048: #ffd54f;
+    --tile-super: #ff8a65;
     --tile-shadow: none;
     --title-color: #e91e63;
     --score-bg: #c8e6c9;
@@ -590,41 +527,10 @@
     --tile-border: 3px solid #5d4e37;
 }
 
-/* Notebook Theme */
-.theme-notebook {
-    --bg-color: #87ceeb;
-    --container-bg: #fff;
-    --text-color: #1a237e;
-    --text-light: #1a237e;
-    --btn-bg: #e3f2fd;
-    --btn-hover: #bbdefb;
-    --cell-bg: transparent;
-    --tile-2: #fff;
-    --tile-4: #e8eaf6;
-    --tile-8: #3f51b5;
-    --tile-16: #2196f3;
-    --tile-32: #03a9f4;
-    --tile-64: #00bcd4;
-    --tile-128: #009688;
-    --tile-256: #4caf50;
-    --tile-512: #8bc34a;
-    --tile-1024: #cddc39;
-    --tile-2048: #ffeb3b;
-    --tile-super: #ff5722;
-    --tile-shadow: none;
-    --title-color: #1a237e;
-    --score-bg: #e3f2fd;
-    --font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
-    --tile-radius: 4px;
-    --tile-font-weight: bold;
-    --cell-border: 1px solid #90caf9;
-    --tile-border: 2px solid #1a237e;
-}
-
 /* Crayon Theme */
 .theme-crayon {
     --bg-color: #f5f5dc;
-    --container-bg: #fffef7;
+    --container-bg: #f0ead6;
     --text-color: #333;
     --text-light: #333;
     --btn-bg: #fce4ec;
@@ -739,19 +645,19 @@ body {
 
 .controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 20px;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .btn {
     background-color: var(--btn-bg);
     color: var(--text-light);
     border: none;
-    padding: 12px 20px;
+    padding: 8px 12px;
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
@@ -778,21 +684,24 @@ body {
     margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .theme-selector label {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
 .theme-selector select {
-    padding: 8px 12px;
+    padding: 6px 8px;
     border-radius: 6px;
     border: none;
     background-color: var(--btn-bg);
     color: var(--text-light);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     cursor: pointer;
+    max-width: 130px;
 }
 
 .game-container {
@@ -869,6 +778,31 @@ body {
     letter-spacing: 0.5em;
 }
 
+.theme-neon .btn {
+    background: linear-gradient(135deg, #ff00ff, #ff69b4);
+    border: 2px solid #ff69b4;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6), 0 0 40px rgba(255, 105, 180, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    color: #fff;
+}
+
+.theme-neon .btn:hover:not(:disabled) {
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 60px rgba(255, 105, 180, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+.theme-neon .theme-selector select {
+    background: linear-gradient(135deg, #ff00ff, #ff69b4);
+    border: 2px solid #ff69b4;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6), 0 0 40px rgba(255, 105, 180, 0.4);
+    color: #fff;
+}
+
+.theme-neon .score-box {
+    border: 2px solid rgba(255, 0, 255, 0.6);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 40px rgba(255, 105, 180, 0.2);
+}
+
 @keyframes neon-flicker {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.95; }
@@ -914,6 +848,14 @@ body {
     font-family: 'Digital-7', 'Consolas', monospace;
 }
 
+.theme-minesweeper select {
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    color: #000;
+    box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080, inset -2px -2px 0 #dfdfdf, inset 2px 2px 0 #000;
+}
+
 /* Terminal special effects */
 .theme-terminal .tile {
     box-shadow: var(--tile-shadow);
@@ -921,10 +863,14 @@ body {
 
 .theme-terminal .title-digits {
     text-shadow: 0 0 10px var(--title-color);
+    white-space: nowrap;
+    font-size: 3.5rem;
 }
 
 .theme-terminal .title-digits::before {
-    content: '> ';
+    content: '>';
+    margin-right: 0.2em;
+    font-size: 0.8em;
 }
 
 .theme-terminal .title-fusion {
@@ -935,19 +881,122 @@ body {
     content: '// ';
 }
 
+.theme-terminal .btn {
+    background: transparent;
+    border: 1px solid var(--title-color);
+    border-radius: 0;
+    color: var(--title-color);
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-terminal .btn::before {
+    content: '[ ';
+}
+
+.theme-terminal .btn::after {
+    content: ' ]';
+}
+
+.theme-terminal .btn:hover:not(:disabled) {
+    background: var(--title-color);
+    color: #000;
+}
+
+.theme-terminal .theme-selector select {
+    background: transparent;
+    border: 1px solid var(--title-color);
+    border-radius: 0;
+    color: var(--title-color);
+    font-family: 'Courier New', monospace;
+}
+
+.theme-terminal .score-box {
+    border: 1px solid var(--title-color);
+    border-radius: 0;
+}
+
+.theme-terminal .score-label::before {
+    content: '$ ';
+}
+
 /* Game Boy special effects */
+.theme-gameboy .game-container {
+    border-radius: 0;
+}
+
 .theme-gameboy .tile {
     image-rendering: pixelated;
     box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+    color: #0f380f;
+    border-radius: 0;
 }
+
+/* Game Boy tile text - lighter tiles get dark text, darker tiles get light text */
+.theme-gameboy .tile-2,
+.theme-gameboy .tile-4,
+.theme-gameboy .tile-8,
+.theme-gameboy .tile-16 { color: #0f380f; }
+
+.theme-gameboy .tile-32,
+.theme-gameboy .tile-64,
+.theme-gameboy .tile-128,
+.theme-gameboy .tile-256,
+.theme-gameboy .tile-512,
+.theme-gameboy .tile-1024,
+.theme-gameboy .tile-2048,
+.theme-gameboy .tile-super { color: #9bbc0f; }
 
 .theme-gameboy .title-digits {
     letter-spacing: 4px;
+    font-size: 2rem;
 }
 
 .theme-gameboy .title-fusion {
-    letter-spacing: 0.4em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
+    font-size: 0.7rem;
+}
+
+.theme-gameboy .btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    padding: 8px 10px;
+    border: 2px solid #0f380f;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+
+.theme-gameboy .btn::before {
+    content: '▶ ';
+}
+
+.theme-gameboy select {
+    font-size: 0.75rem;
+    border: 2px solid #0f380f;
+    border-radius: 0;
+    background: #9bbc0f;
+    padding: 4px 6px;
+    color: #0f380f;
+}
+
+.theme-gameboy .score-box {
+    border: 2px solid #0f380f;
+    border-radius: 0;
+}
+
+.theme-gameboy .score-label {
+    font-size: 0.5rem;
+}
+
+.theme-gameboy .score-value {
+    font-size: 0.8rem;
+}
+
+.theme-gameboy .controls label {
+    font-size: 0.8rem;
 }
 
 /* Windows XP special effects */
@@ -992,49 +1041,16 @@ body {
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* macOS special effects */
-.theme-macos {
-    background: linear-gradient(180deg, #b5c7d3 0%, #8fa4b3 100%);
+.theme-winxp select {
+    background: #fff;
+    border: 1px solid #7f9db9;
+    border-radius: 0;
+    color: #000;
 }
 
-.theme-macos .tile {
-    box-shadow: var(--tile-shadow);
-}
-
-.theme-macos .btn {
-    background: linear-gradient(180deg, #fafafa 0%, #e0e0e0 100%);
-    border: 1px solid #c0c0c0;
-    border-radius: 6px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    color: #333;
-}
-
-.theme-macos .btn:hover:not(:disabled) {
-    background: linear-gradient(180deg, #fff 0%, #e8e8e8 100%);
-}
-
-.theme-macos .game-container {
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-}
-
-.theme-macos .score-box {
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.theme-macos .title-digits {
-    font-weight: 700;
-    letter-spacing: -2px;
-}
-
-.theme-macos .title-fusion {
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    opacity: 0.6;
+.theme-winxp .theme-selector label {
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Whiteboard special effects */
@@ -1137,46 +1153,6 @@ body {
     transform: rotate(1deg);
 }
 
-/* Notebook special effects */
-.theme-notebook .game-container {
-    background-image:
-        repeating-linear-gradient(
-            transparent,
-            transparent 31px,
-            #e0e0e0 31px,
-            #e0e0e0 32px
-        );
-    background-color: #fff;
-    border-left: 4px solid #e91e63;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.theme-notebook .tile {
-    border-radius: 2px;
-    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-}
-
-.theme-notebook .title-digits {
-    font-size: 4.5rem;
-    text-decoration: underline;
-    text-decoration-style: wavy;
-    text-underline-offset: 8px;
-}
-
-.theme-notebook .title-fusion {
-    font-style: italic;
-}
-
-.theme-notebook .btn {
-    border: 2px solid #1a237e;
-    border-radius: 4px;
-}
-
-.theme-notebook .score-box {
-    border: 2px solid #1a237e;
-    border-radius: 4px;
-}
-
 /* Crayon special effects */
 .theme-crayon .tile {
     border-radius: 35% 65% 60% 40% / 50% 50% 60% 40%;
@@ -1232,19 +1208,78 @@ body {
 /* Cherry Blossom special effects */
 .theme-cherry-blossom .tile {
     box-shadow: var(--tile-shadow);
+    border: 3px solid rgba(255, 255, 255, 0.5);
 }
 
 .theme-cherry-blossom .cell {
     border-radius: 50%;
 }
 
+.theme-cherry-blossom .title-digits {
+    font-size: 4rem;
+    text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(255, 105, 180, 0.3);
+}
+
 .theme-cherry-blossom .title-digits .d-2 { color: #ff69b4; }
-.theme-cherry-blossom .title-digits .d-0 { color: #ffb7c5; }
+.theme-cherry-blossom .title-digits .d-0 { color: #ff85c1; }
 .theme-cherry-blossom .title-digits .d-4 { color: #ff1493; }
 .theme-cherry-blossom .title-digits .d-8 { color: #ff69b4; }
 
 .theme-cherry-blossom .title-fusion {
-    color: #8b4563;
+    color: #d63384;
+    font-style: italic;
+    letter-spacing: 0.3em;
+}
+
+.theme-cherry-blossom .btn {
+    background: linear-gradient(135deg, #ff69b4, #ff85c1);
+    border: 2px solid #fff;
+    border-radius: 20px;
+    color: #fff;
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.theme-cherry-blossom .btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff85c1, #ffa6d1);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+}
+
+.theme-cherry-blossom .btn::before {
+    content: '✿ ';
+}
+
+.theme-cherry-blossom .btn::after {
+    content: ' ✿';
+}
+
+.theme-cherry-blossom select {
+    background: linear-gradient(135deg, #ff69b4, #ff85c1);
+    border: 2px solid #fff;
+    border-radius: 20px;
+    color: #fff;
+}
+
+.theme-cherry-blossom .score-box {
+    background: linear-gradient(135deg, #ff69b4, #ff85c1);
+    border: 2px solid #fff;
+    border-radius: 15px;
+}
+
+.theme-cherry-blossom .score-label,
+.theme-cherry-blossom .score-value {
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.theme-cherry-blossom .controls label {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    color: #d63384;
 }
 
 /* Aurora special effects */
@@ -1265,6 +1300,31 @@ body {
 .theme-aurora .title-fusion {
     color: #fff;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.theme-aurora .btn {
+    background: linear-gradient(135deg, #00ff87, #60efff);
+    border: none;
+    color: #0a0a1a;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.4), 0 0 40px rgba(96, 239, 255, 0.2);
+}
+
+.theme-aurora .btn:hover:not(:disabled) {
+    box-shadow: 0 0 30px rgba(0, 255, 135, 0.6), 0 0 60px rgba(96, 239, 255, 0.4);
+}
+
+.theme-aurora .theme-selector select {
+    background: linear-gradient(135deg, #60efff, #ff00ff);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(96, 239, 255, 0.4);
+}
+
+.theme-aurora .score-box {
+    border: 2px solid rgba(0, 255, 135, 0.3);
+    box-shadow: 0 0 15px rgba(0, 255, 135, 0.2);
 }
 
 /* Glassmorphism special effects */
@@ -1299,6 +1359,20 @@ body {
     text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
+/* Clashing vaporwave tile text colors */
+.theme-vaporwave .tile-2 { color: #01cdfe; }      /* cyan on pink */
+.theme-vaporwave .tile-4 { color: #ff71ce; }      /* pink on cyan */
+.theme-vaporwave .tile-8 { color: #b967ff; }      /* purple on green */
+.theme-vaporwave .tile-16 { color: #05ffa1; }     /* green on purple */
+.theme-vaporwave .tile-32 { color: #ff71ce; }     /* pink on yellow */
+.theme-vaporwave .tile-64 { color: #01cdfe; }     /* cyan on pink */
+.theme-vaporwave .tile-128 { color: #fffb96; }    /* yellow on cyan */
+.theme-vaporwave .tile-256 { color: #ff71ce; }    /* pink on green */
+.theme-vaporwave .tile-512 { color: #05ffa1; }    /* green on purple */
+.theme-vaporwave .tile-1024 { color: #b967ff; }   /* purple on yellow */
+.theme-vaporwave .tile-2048 { color: #ff71ce; }   /* pink on white */
+.theme-vaporwave .tile-super { color: #01cdfe; }  /* cyan on hot pink */
+
 .theme-vaporwave .title-digits {
     text-shadow: 4px 4px 0 #01cdfe, -2px -2px 0 #ff71ce;
     letter-spacing: 8px;
@@ -1308,20 +1382,6 @@ body {
     color: #01cdfe;
     text-shadow: 2px 2px 0 #ff71ce;
     letter-spacing: 0.6em;
-}
-
-/* Chalkboard special effects */
-.theme-chalkboard .tile {
-    box-shadow: var(--tile-shadow);
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-}
-
-.theme-chalkboard .title-digits {
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
-}
-
-.theme-chalkboard .title-fusion {
-    opacity: 0.9;
 }
 
 /* Blueprint special effects */
@@ -1341,6 +1401,62 @@ body {
     font-weight: normal;
     letter-spacing: 0.4em;
     text-transform: uppercase;
+}
+
+/* Vaporwave button styles */
+.theme-vaporwave .btn {
+    background: linear-gradient(135deg, #b967ff, #ff71ce);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 4px 4px 0 #01cdfe, -2px -2px 0 #05ffa1;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.theme-vaporwave .btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #c77dff, #ff8ad8);
+    box-shadow: 6px 6px 0 #01cdfe, -3px -3px 0 #05ffa1;
+    transform: translate(-2px, -2px);
+}
+
+.theme-vaporwave select {
+    background: linear-gradient(135deg, #b967ff, #ff71ce);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 3px 3px 0 #01cdfe;
+}
+
+/* Blueprint button styles */
+.theme-blueprint .btn {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 0;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-blueprint .btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
+.theme-blueprint select {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 0;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+}
+
+.theme-blueprint .score-box {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 0;
 }
 
 /* Animations */
@@ -1452,6 +1568,15 @@ body {
     background-color: rgba(0, 0, 0, 0.85);
 }
 
+.theme-blueprint .game-message {
+    background-color: rgba(30, 77, 120, 0.95);
+    color: #fff;
+}
+
+.theme-blueprint .game-message p {
+    color: #fff;
+}
+
 .instructions {
     margin-top: 20px;
     text-align: center;
@@ -1479,6 +1604,7 @@ body {
 /* Score addition animation */
 .score-addition {
     position: absolute;
+    right: 0;
     font-size: 1.2rem;
     font-weight: bold;
     color: var(--text-light);

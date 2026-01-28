@@ -355,7 +355,9 @@ class Game2048 {
     move(direction) {
         if (this.isAnimating)
             return false;
-        if (this.gameOver && !this.keepPlaying)
+        if (this.gameOver)
+            return false;
+        if (this.hasWon)
             return false;
         this.saveState();
         this.prepareTiles();
@@ -630,13 +632,10 @@ class Game2048 {
         const messageText = this.gameMessage.querySelector('p');
         messageText.textContent = message;
         if (isWin) {
-            this.retryButton.textContent = 'Keep Playing';
-            this.retryButton.onclick = () => {
-                this.keepPlaying = true;
-                this.hideGameMessage();
-            };
+            this.retryButton.style.display = 'none';
         }
         else {
+            this.retryButton.style.display = '';
             this.retryButton.textContent = 'Try Again';
             this.retryButton.onclick = () => this.newGame();
         }
