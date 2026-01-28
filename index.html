@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Indie+Flower&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">2048</h1>
+            <div class="scores">
+                <div class="score-box">
+                    <span class="score-label">Score</span>
+                    <span class="score-value" id="score">0</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">Best</span>
+                    <span class="score-value" id="best-score">0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <button class="btn" id="new-game">New Game</button>
+            <button class="btn" id="undo" disabled>Undo</button>
+            <div class="theme-selector">
+                <label for="theme">Theme:</label>
+                <select id="theme">
+                    <option value="classic">Classic</option>
+                    <option disabled>──────────</option>
+                    <option value="neon">Neon</option>
+                    <option value="cherry-blossom">Cherry Blossom</option>
+                    <option value="aurora">Aurora</option>
+                    <option value="glass">Glassmorphism</option>
+                    <option value="vaporwave">Vaporwave</option>
+                    <option disabled>──────────</option>
+                    <option value="minesweeper">Minesweeper</option>
+                    <option value="terminal">Terminal</option>
+                    <option value="gameboy">Game Boy</option>
+                    <option value="winxp">Windows XP</option>
+                    <option value="macos">macOS</option>
+                    <option disabled>──────────</option>
+                    <option value="blueprint">Blueprint</option>
+                    <option value="chalkboard">Chalkboard</option>
+                    <option value="whiteboard">Whiteboard</option>
+                    <option value="kids">Kids Drawing</option>
+                    <option value="notebook">Notebook</option>
+                    <option value="crayon">Crayon</option>
+                    <option disabled>──────────</option>
+                    <option value="ocean">Ocean</option>
+                    <option value="forest">Forest</option>
+                    <option value="sunset">Sunset</option>
+                    <option value="lavender">Lavender</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <div class="grid" id="grid">
+                <!-- Tiles will be inserted here -->
+            </div>
+            <div class="game-message" id="game-message">
+                <p></p>
+                <button class="btn" id="retry">Try Again</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <p>Use <strong>arrow keys</strong> or <strong>WASD</strong> to move tiles</p>
+            <p>Press <strong>Z</strong> or <strong>Ctrl+Z</strong> to undo</p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

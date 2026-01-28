@@ -1,0 +1,516 @@
+class Game2048 {
+    constructor() {
+        this.size = 4;
+        this.grid = [];
+        this.score = 0;
+        this.bestScore = 0;
+        this.history = [];
+        this.maxHistoryLength = 50;
+        this.tileIdCounter = 0;
+        this.isAnimating = false;
+        this.gameOver = false;
+        this.hasWon = false;
+        this.keepPlaying = false;
+        this.animationDuration = 150;
+        this.gridElement = document.getElementById('grid');
+        this.scoreElement = document.getElementById('score');
+        this.bestScoreElement = document.getElementById('best-score');
+        this.undoButton = document.getElementById('undo');
+        this.newGameButton = document.getElementById('new-game');
+        this.themeSelect = document.getElementById('theme');
+        this.gameMessage = document.getElementById('game-message');
+        this.retryButton = document.getElementById('retry');
+        this.loadBestScore();
+        this.loadTheme();
+        this.setupGrid();
+        this.setupEventListeners();
+        this.newGame();
+    }
+    loadBestScore() {
+        const saved = localStorage.getItem('2048-best-score');
+        if (saved) {
+            this.bestScore = parseInt(saved, 10);
+            this.bestScoreElement.textContent = this.bestScore.toString();
+        }
+    }
+    saveBestScore() {
+        localStorage.setItem('2048-best-score', this.bestScore.toString());
+    }
+    loadTheme() {
+        const saved = localStorage.getItem('2048-theme');
+        if (saved) {
+            this.themeSelect.value = saved;
+            this.applyTheme(saved);
+        }
+    }
+    saveTheme(theme) {
+        localStorage.setItem('2048-theme', theme);
+    }
+    applyTheme(theme) {
+        document.body.className = '';
+        if (theme !== 'classic') {
+            document.body.classList.add(`theme-${theme}`);
+        }
+    }
+    setupGrid() {
+        this.gridElement.innerHTML = '';
+        for (let i = 0; i < this.size * this.size; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            this.gridElement.appendChild(cell);
+        }
+    }
+    setupEventListeners() {
+        document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+        this.newGameButton.addEventListener('click', () => this.newGame());
+        this.undoButton.addEventListener('click', () => this.undo());
+        this.retryButton.addEventListener('click', () => this.newGame());
+        this.themeSelect.addEventListener('change', (e) => {
+            const theme = e.target.value;
+            this.applyTheme(theme);
+            this.saveTheme(theme);
+            this.render();
+        });
+        let touchStartX;
+        let touchStartY;
+        this.gridElement.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        this.gridElement.addEventListener('touchend', (e) => {
+            if (!touchStartX || !touchStartY)
+                return;
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const minSwipeDistance = 50;
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (Math.abs(deltaX) > minSwipeDistance) {
+                    this.move(deltaX > 0 ? 'right' : 'left');
+                }
+            }
+            else {
+                if (Math.abs(deltaY) > minSwipeDistance) {
+                    this.move(deltaY > 0 ? 'down' : 'up');
+                }
+            }
+        }, { passive: true });
+    }
+    handleKeyDown(e) {
+        if (this.isAnimating)
+            return;
+        if (e.key === 'z' || e.key === 'Z') {
+            if (e.ctrlKey || e.metaKey || !e.shiftKey) {
+                e.preventDefault();
+                this.undo();
+                return;
+            }
+        }
+        let direction = null;
+        switch (e.key) {
+            case 'ArrowUp':
+            case 'w':
+            case 'W':
+                direction = 'up';
+                break;
+            case 'ArrowDown':
+            case 's':
+            case 'S':
+                direction = 'down';
+                break;
+            case 'ArrowLeft':
+            case 'a':
+            case 'A':
+                direction = 'left';
+                break;
+            case 'ArrowRight':
+            case 'd':
+            case 'D':
+                direction = 'right';
+                break;
+        }
+        if (direction) {
+            e.preventDefault();
+            this.move(direction);
+        }
+    }
+    newGame() {
+        this.grid = Array(this.size).fill(null).map(() => Array(this.size).fill(null));
+        this.score = 0;
+        this.history = [];
+        this.gameOver = false;
+        this.hasWon = false;
+        this.keepPlaying = false;
+        this.tileIdCounter = 0;
+        this.updateScore();
+        this.updateUndoButton();
+        this.hideGameMessage();
+        this.clearTiles();
+        this.addRandomTile();
+        this.addRandomTile();
+        this.render();
+    }
+    getGridValues() {
+        return this.grid.map(row => row.map(tile => tile ? tile.value : 0));
+    }
+    saveState() {
+        const state = {
+            grid: this.getGridValues(),
+            score: this.score
+        };
+        this.history.push(state);
+        if (this.history.length > this.maxHistoryLength) {
+            this.history.shift();
+        }
+        this.updateUndoButton();
+    }
+    undo() {
+        if (this.history.length === 0 || this.isAnimating)
+            return;
+        const state = this.history.pop();
+        this.restoreGrid(state.grid);
+        this.score = state.score;
+        this.gameOver = false;
+        this.hideGameMessage();
+        this.updateScore();
+        this.updateUndoButton();
+        this.clearTiles();
+        this.render();
+    }
+    restoreGrid(values) {
+        this.grid = values.map((row, r) => row.map((value, c) => {
+            if (value === 0)
+                return null;
+            return this.createTile(r, c, value, false);
+        }));
+    }
+    createTile(row, col, value, isNew = true) {
+        return {
+            id: this.tileIdCounter++,
+            value,
+            row,
+            col,
+            previousRow: null,
+            previousCol: null,
+            mergedFrom: null,
+            isNew
+        };
+    }
+    updateUndoButton() {
+        this.undoButton.disabled = this.history.length === 0;
+    }
+    updateScore() {
+        this.scoreElement.textContent = this.score.toString();
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+            this.bestScoreElement.textContent = this.bestScore.toString();
+            this.saveBestScore();
+        }
+    }
+    showScoreAddition(points) {
+        const scoreBox = this.scoreElement.parentElement;
+        const addition = document.createElement('div');
+        addition.className = 'score-addition';
+        addition.textContent = `+${points}`;
+        scoreBox.appendChild(addition);
+        setTimeout(() => addition.remove(), 800);
+    }
+    addRandomTile() {
+        const emptyCells = [];
+        for (let row = 0; row < this.size; row++) {
+            for (let col = 0; col < this.size; col++) {
+                if (!this.grid[row][col]) {
+                    emptyCells.push({ row, col });
+                }
+            }
+        }
+        if (emptyCells.length === 0)
+            return null;
+        const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        const value = Math.random() < 0.9 ? 2 : 4;
+        const tile = this.createTile(row, col, value, true);
+        this.grid[row][col] = tile;
+        return tile;
+    }
+    prepareTiles() {
+        for (let row = 0; row < this.size; row++) {
+            for (let col = 0; col < this.size; col++) {
+                const tile = this.grid[row][col];
+                if (tile) {
+                    tile.mergedFrom = null;
+                    tile.isNew = false;
+                    tile.previousRow = tile.row;
+                    tile.previousCol = tile.col;
+                }
+            }
+        }
+    }
+    moveTile(tile, row, col) {
+        this.grid[tile.row][tile.col] = null;
+        this.grid[row][col] = tile;
+        tile.row = row;
+        tile.col = col;
+    }
+    move(direction) {
+        if (this.isAnimating)
+            return false;
+        if (this.gameOver && !this.keepPlaying)
+            return false;
+        this.saveState();
+        this.prepareTiles();
+        let moved = false;
+        let scoreGain = 0;
+        const vectors = {
+            up: { row: -1, col: 0 },
+            down: { row: 1, col: 0 },
+            left: { row: 0, col: -1 },
+            right: { row: 0, col: 1 }
+        };
+        const vector = vectors[direction];
+        const traversals = this.buildTraversals(vector);
+        for (const row of traversals.rows) {
+            for (const col of traversals.cols) {
+                const tile = this.grid[row][col];
+                if (!tile)
+                    continue;
+                const { furthest, next } = this.findFurthestPosition(row, col, vector);
+                if (next) {
+                    const nextTile = this.grid[next.row][next.col];
+                    if (nextTile && nextTile.value === tile.value && !nextTile.mergedFrom) {
+                        // Merge tiles
+                        const merged = this.createTile(next.row, next.col, tile.value * 2, false);
+                        merged.mergedFrom = [tile, nextTile];
+                        merged.previousRow = tile.row;
+                        merged.previousCol = tile.col;
+                        this.grid[tile.row][tile.col] = null;
+                        this.grid[next.row][next.col] = merged;
+                        tile.row = next.row;
+                        tile.col = next.col;
+                        scoreGain += merged.value;
+                        moved = true;
+                        if (merged.value === 2048 && !this.hasWon) {
+                            this.hasWon = true;
+                        }
+                        continue;
+                    }
+                }
+                if (furthest.row !== row || furthest.col !== col) {
+                    this.moveTile(tile, furthest.row, furthest.col);
+                    moved = true;
+                }
+            }
+        }
+        if (moved) {
+            this.score += scoreGain;
+            if (scoreGain > 0) {
+                this.showScoreAddition(scoreGain);
+            }
+            this.updateScore();
+            this.isAnimating = true;
+            this.render();
+            setTimeout(() => {
+                this.addRandomTile();
+                this.render();
+                setTimeout(() => {
+                    this.isAnimating = false;
+                    if (!this.movesAvailable()) {
+                        this.gameOver = true;
+                        this.showGameMessage('Game Over!');
+                    }
+                    else if (this.hasWon && !this.keepPlaying) {
+                        this.showGameMessage('You Win!', true);
+                    }
+                }, 100);
+            }, this.animationDuration);
+        }
+        else {
+            this.history.pop();
+            this.updateUndoButton();
+        }
+        return moved;
+    }
+    buildTraversals(vector) {
+        const rows = [];
+        const cols = [];
+        for (let i = 0; i < this.size; i++) {
+            rows.push(i);
+            cols.push(i);
+        }
+        if (vector.row === 1)
+            rows.reverse();
+        if (vector.col === 1)
+            cols.reverse();
+        return { rows, cols };
+    }
+    findFurthestPosition(row, col, vector) {
+        let previousRow = row;
+        let previousCol = col;
+        let currentRow = row + vector.row;
+        let currentCol = col + vector.col;
+        while (this.isWithinBounds(currentRow, currentCol) && !this.grid[currentRow][currentCol]) {
+            previousRow = currentRow;
+            previousCol = currentCol;
+            currentRow += vector.row;
+            currentCol += vector.col;
+        }
+        return {
+            furthest: { row: previousRow, col: previousCol },
+            next: this.isWithinBounds(currentRow, currentCol) ? { row: currentRow, col: currentCol } : null
+        };
+    }
+    isWithinBounds(row, col) {
+        return row >= 0 && row < this.size && col >= 0 && col < this.size;
+    }
+    movesAvailable() {
+        for (let row = 0; row < this.size; row++) {
+            for (let col = 0; col < this.size; col++) {
+                if (!this.grid[row][col])
+                    return true;
+            }
+        }
+        for (let row = 0; row < this.size; row++) {
+            for (let col = 0; col < this.size; col++) {
+                const tile = this.grid[row][col];
+                if (!tile)
+                    continue;
+                if (col < this.size - 1) {
+                    const right = this.grid[row][col + 1];
+                    if (right && right.value === tile.value)
+                        return true;
+                }
+                if (row < this.size - 1) {
+                    const down = this.grid[row + 1][col];
+                    if (down && down.value === tile.value)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+    clearTiles() {
+        const tiles = this.gridElement.querySelectorAll('.tile');
+        tiles.forEach(tile => tile.remove());
+    }
+    getTileClass(value) {
+        if (value <= 2048) {
+            return `tile-${value}`;
+        }
+        return 'tile-super';
+    }
+    getCellPosition(row, col) {
+        const cellIndex = row * this.size + col;
+        const cell = this.gridElement.children[cellIndex];
+        return {
+            top: cell.offsetTop,
+            left: cell.offsetLeft,
+            size: cell.offsetWidth
+        };
+    }
+    render() {
+        // First, remove tiles that are no longer in the grid
+        const existingTiles = this.gridElement.querySelectorAll('.tile');
+        const currentTileIds = new Set();
+        for (let row = 0; row < this.size; row++) {
+            for (let col = 0; col < this.size; col++) {
+                const tile = this.grid[row][col];
+                if (tile) {
+                    currentTileIds.add(tile.id);
+                    if (tile.mergedFrom) {
+                        tile.mergedFrom.forEach(t => currentTileIds.add(t.id));
+                    }
+                }
+            }
+        }
+        existingTiles.forEach(el => {
+            const id = parseInt(el.getAttribute('data-id') || '-1', 10);
+            if (!currentTileIds.has(id)) {
+                el.remove();
+            }
+        });
+        // Render all tiles
+        for (let row = 0; row < this.size; row++) {
+            for (let col = 0; col < this.size; col++) {
+                const tile = this.grid[row][col];
+                if (!tile)
+                    continue;
+                // Render merged tiles first (they animate to position then disappear)
+                if (tile.mergedFrom) {
+                    tile.mergedFrom.forEach(mergedTile => {
+                        this.renderTile(mergedTile, tile.row, tile.col, false, false);
+                    });
+                }
+                // Render the main tile
+                const isMerged = !!tile.mergedFrom;
+                this.renderTile(tile, tile.row, tile.col, tile.isNew, isMerged);
+            }
+        }
+    }
+    renderTile(tile, toRow, toCol, isNew, isMerged) {
+        let element = this.gridElement.querySelector(`[data-id="${tile.id}"]`);
+        const targetPos = this.getCellPosition(toRow, toCol);
+        if (!element) {
+            // Create new element
+            element = document.createElement('div');
+            element.setAttribute('data-id', tile.id.toString());
+            element.className = `tile ${this.getTileClass(tile.value)}`;
+            element.textContent = tile.value.toString();
+            element.style.width = `${targetPos.size}px`;
+            element.style.height = `${targetPos.size}px`;
+            if (isNew) {
+                // New tile: start at target position with scale 0
+                element.style.top = `${targetPos.top}px`;
+                element.style.left = `${targetPos.left}px`;
+                element.classList.add('tile-new');
+            }
+            else if (tile.previousRow !== null && tile.previousCol !== null) {
+                // Moving tile: start at previous position
+                const fromPos = this.getCellPosition(tile.previousRow, tile.previousCol);
+                element.style.top = `${fromPos.top}px`;
+                element.style.left = `${fromPos.left}px`;
+            }
+            else {
+                // Fallback: place at target
+                element.style.top = `${targetPos.top}px`;
+                element.style.left = `${targetPos.left}px`;
+            }
+            this.gridElement.appendChild(element);
+            // Trigger reflow for animation
+            element.offsetHeight;
+        }
+        // Update position (triggers CSS transition)
+        element.style.top = `${targetPos.top}px`;
+        element.style.left = `${targetPos.left}px`;
+        // Update value and class (for merged tiles)
+        if (isMerged) {
+            element.classList.add('tile-merged');
+            // Update value after move animation
+            setTimeout(() => {
+                element.className = `tile ${this.getTileClass(tile.value)} tile-merged`;
+                element.textContent = tile.value.toString();
+            }, this.animationDuration);
+        }
+    }
+    showGameMessage(message, isWin = false) {
+        const messageText = this.gameMessage.querySelector('p');
+        messageText.textContent = message;
+        if (isWin) {
+            this.retryButton.textContent = 'Keep Playing';
+            this.retryButton.onclick = () => {
+                this.keepPlaying = true;
+                this.hideGameMessage();
+            };
+        }
+        else {
+            this.retryButton.textContent = 'Try Again';
+            this.retryButton.onclick = () => this.newGame();
+        }
+        this.gameMessage.classList.add('active');
+    }
+    hideGameMessage() {
+        this.gameMessage.classList.remove('active');
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    new Game2048();
+});
