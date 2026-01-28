@@ -12,6 +12,7 @@ class Game2048 {
         this.hasWon = false;
         this.keepPlaying = false;
         this.animationDuration = 150;
+        this.debugMode = false;
         this.gridElement = document.getElementById('grid');
         this.scoreElement = document.getElementById('score');
         this.bestScoreElement = document.getElementById('best-score');
@@ -24,7 +25,7 @@ class Game2048 {
         this.loadTheme();
         this.setupGrid();
         this.setupEventListeners();
-        this.newGame();
+        this.initFromUrl();
     }
     loadBestScore() {
         const saved = localStorage.getItem('2048-best-score');
@@ -61,6 +62,91 @@ class Game2048 {
         if (theme !== 'classic') {
             document.body.classList.add(`theme-${theme}`);
         }
+    }
+    initFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        this.debugMode = urlParams.get('debug') === 'true';
+        const state = urlParams.get('state');
+        if (state) {
+            this.loadStateFromString(state);
+        }
+        else {
+            this.newGame();
+        }
+    }
+    getScenarios() {
+        // Format: "score_base36-grid_hex" where grid is 16 hex digits (log2 of each cell value)
+        // Tile values: 0=empty, 1=2, 2=4, 3=8, 4=16, 5=32, 6=64, 7=128, 8=256, 9=512, a=1024, b=2048
+        return {
+            '64': '2s-0000000000005500',
+            '128': '5k-0000000000006600',
+            '256': 'dw-0000000000007700',
+            '512': 'rs-0000000000008800',
+            '1024': '1jk-0000000000009900',
+            '2048': '334-000000000000aa00',
+            'win': '7ps-1234567890aa1234',
+            // lose: Grid full except one cell, no adjacent matches possible after any move
+            // Row 0: 2,4,8,16  Row 1: 32,64,128,256  Row 2: 2,4,8,16  Row 3: 32,64,128,_
+            'lose': 'dw-1234567812345670'
+        };
+    }
+    loadStateFromString(stateStr) {
+        try {
+            // Check if it's a named scenario
+            const scenarios = this.getScenarios();
+            if (scenarios[stateStr]) {
+                stateStr = scenarios[stateStr];
+            }
+            // Format: "score-t0t1t2...t15" where each t is log2(value) as hex (0=empty, 1=2, 2=4, etc)
+            const [scoreStr, gridStr] = stateStr.split('-');
+            const score = parseInt(scoreStr, 36);
+            const grid = [];
+            for (let row = 0; row < this.size; row++) {
+                grid[row] = [];
+                for (let col = 0; col < this.size; col++) {
+                    const idx = row * this.size + col;
+                    const encoded = parseInt(gridStr[idx], 16);
+                    grid[row][col] = encoded === 0 ? 0 : Math.pow(2, encoded);
+                }
+            }
+            this.grid = Array(this.size).fill(null).map(() => Array(this.size).fill(null));
+            this.score = score;
+            this.history = [];
+            this.gameOver = false;
+            this.hasWon = false;
+            this.keepPlaying = false;
+            this.tileIdCounter = 0;
+            this.restoreGrid(grid);
+            this.updateScore();
+            this.updateUndoButton();
+            this.hideGameMessage();
+            this.clearTiles();
+            this.render();
+        }
+        catch (e) {
+            console.error('Failed to load state from URL:', e);
+            this.newGame();
+        }
+    }
+    encodeStateToString() {
+        // Format: "score-t0t1t2...t15" where each t is log2(value) as hex (0=empty, 1=2, 2=4, etc)
+        const gridValues = this.getGridValues();
+        let gridStr = '';
+        for (let row = 0; row < this.size; row++) {
+            for (let col = 0; col < this.size; col++) {
+                const value = gridValues[row][col];
+                const encoded = value === 0 ? 0 : Math.log2(value);
+                gridStr += encoded.toString(16);
+            }
+        }
+        return this.score.toString(36) + '-' + gridStr;
+    }
+    updateDebugUrl() {
+        if (!this.debugMode)
+            return;
+        const url = new URL(window.location.href);
+        url.searchParams.set('state', this.encodeStateToString());
+        window.history.replaceState({}, '', url);
     }
     setupGrid() {
         this.gridElement.innerHTML = '';
@@ -329,6 +415,7 @@ class Game2048 {
                 if (newTile) {
                     this.renderTile(newTile, newTile.row, newTile.col, true, false);
                 }
+                this.updateDebugUrl();
                 setTimeout(() => {
                     this.isAnimating = false;
                     if (!this.movesAvailable()) {
