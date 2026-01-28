@@ -8,14 +8,18 @@ The classic 2048 puzzle game, reimagined with 18 stunning visual themes.
 
 | | | |
 |:---:|:---:|:---:|
-| ![Classic](screenshots/classic.png) | ![Neon](screenshots/neon.png) | ![Blueprint](screenshots/blueprint.png) |
-| Classic | Neon | Blueprint |
-| ![Minesweeper](screenshots/minesweeper.png) | ![Kids Drawing](screenshots/kids.png) | ![Cherry Blossom](screenshots/cherry-blossom.png) |
-| Minesweeper | Kids Drawing | Cherry Blossom |
-
-## Themes
-
-Classic, Neon, Vice, Glassmorphism, Aurora, Minesweeper, Terminal, Game Boy, Windows XP, Kids Drawing, Crayon, Blueprint, Whiteboard, Cherry Blossom, Ocean, Forest, Sunset, Lavender
+| ![Classic](screenshots/classic.png) | ![Neon](screenshots/neon.png) | ![Vice](screenshots/vice.png) |
+| Classic | Neon | Vice |
+| ![Glassmorphism](screenshots/glass.png) | ![Aurora](screenshots/aurora.png) | ![Minesweeper](screenshots/minesweeper.png) |
+| Glassmorphism | Aurora | Minesweeper |
+| ![Terminal](screenshots/terminal.png) | ![Game Boy](screenshots/gameboy.png) | ![Windows XP](screenshots/winxp.png) |
+| Terminal | Game Boy | Windows XP |
+| ![Kids Drawing](screenshots/kids.png) | ![Crayon](screenshots/crayon.png) | ![Blueprint](screenshots/blueprint.png) |
+| Kids Drawing | Crayon | Blueprint |
+| ![Whiteboard](screenshots/whiteboard.png) | ![Cherry Blossom](screenshots/cherry-blossom.png) | ![Ocean](screenshots/ocean.png) |
+| Whiteboard | Cherry Blossom | Ocean |
+| ![Forest](screenshots/forest.png) | ![Sunset](screenshots/sunset.png) | ![Lavender](screenshots/lavender.png) |
+| Forest | Sunset | Lavender |
 
 ## How to Play
 

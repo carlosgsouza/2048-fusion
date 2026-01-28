@@ -40,16 +40,14 @@ class Game2048 {
     loadTheme() {
         const urlParams = new URLSearchParams(window.location.search);
         const urlTheme = urlParams.get('theme');
-        const saved = urlTheme || localStorage.getItem('2048-theme');
-        if (saved) {
-            this.themeSelect.value = saved;
-            this.applyTheme(saved);
-        }
+        const saved = urlTheme || localStorage.getItem('2048-theme') || 'neon';
+        this.themeSelect.value = saved;
+        this.applyTheme(saved);
     }
     saveTheme(theme) {
         localStorage.setItem('2048-theme', theme);
         const url = new URL(window.location.href);
-        if (theme === 'classic') {
+        if (theme === 'neon') {
             url.searchParams.delete('theme');
         }
         else {
@@ -309,14 +307,6 @@ class Game2048 {
             this.saveBestScore();
         }
     }
-    showScoreAddition(points) {
-        const scoreBox = this.scoreElement.parentElement;
-        const addition = document.createElement('div');
-        addition.className = 'score-addition';
-        addition.textContent = `+${points}`;
-        scoreBox.appendChild(addition);
-        setTimeout(() => addition.remove(), 800);
-    }
     addRandomTile() {
         const emptyCells = [];
         for (let row = 0; row < this.size; row++) {
@@ -406,9 +396,6 @@ class Game2048 {
         }
         if (moved) {
             this.score += scoreGain;
-            if (scoreGain > 0) {
-                this.showScoreAddition(scoreGain);
-            }
             this.updateScore();
             this.isAnimating = true;
             this.render();
