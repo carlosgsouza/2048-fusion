@@ -87,6 +87,9 @@ class Game2048 {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
         }, { passive: true });
+        this.gridElement.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
         this.gridElement.addEventListener('touchend', (e) => {
             if (!touchStartX || !touchStartY)
                 return;
