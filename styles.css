@@ -440,37 +440,6 @@ body {
     --tile-border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
-/* Windows XP Theme */
-.theme-winxp {
-    --bg-color: #3a6ea5;
-    --container-bg: #ece9d8;
-    --text-color: #000;
-    --text-light: #fff;
-    --btn-bg: linear-gradient(180deg, #fff 0%, #ece9d8 50%, #d4d0c8 100%);
-    --btn-hover: #ece9d8;
-    --cell-bg: #d4d0c8;
-    --tile-2: #f5f3eb;
-    --tile-4: #ece9d8;
-    --tile-8: #8cb330;
-    --tile-16: #f9a01b;
-    --tile-32: #ef6a1a;
-    --tile-64: #e03c31;
-    --tile-128: #5ea1d8;
-    --tile-256: #4189c1;
-    --tile-512: #3174ac;
-    --tile-1024: #245d91;
-    --tile-2048: #ffd700;
-    --tile-super: #ffd700;
-    --tile-shadow: none;
-    --title-color: #fff;
-    --score-bg: #0054e3;
-    --font-family: 'Tahoma', 'Segoe UI', sans-serif;
-    --tile-radius: 3px;
-    --tile-font-weight: bold;
-    --cell-border: 1px solid #aca899;
-    --tile-border: none;
-}
-
 /* Whiteboard Theme */
 .theme-whiteboard {
     --bg-color: #f5f5f5;
@@ -531,37 +500,6 @@ body {
     --tile-font-weight: bold;
     --cell-border: 3px solid #8d6e63;
     --tile-border: 3px solid #5d4e37;
-}
-
-/* Crayon Theme */
-.theme-crayon {
-    --bg-color: #f5f5dc;
-    --container-bg: #f0ead6;
-    --text-color: #333;
-    --text-light: #333;
-    --btn-bg: #fce4ec;
-    --btn-hover: #f8bbd9;
-    --cell-bg: transparent;
-    --tile-2: #ffcdd2;
-    --tile-4: #fff176;
-    --tile-8: #ff7043;
-    --tile-16: #ec407a;
-    --tile-32: #ab47bc;
-    --tile-64: #5c6bc0;
-    --tile-128: #29b6f6;
-    --tile-256: #26a69a;
-    --tile-512: #9ccc65;
-    --tile-1024: #ffee58;
-    --tile-2048: #ffa726;
-    --tile-super: #ffa726;
-    --tile-shadow: none;
-    --title-color: #e91e63;
-    --score-bg: #e1f5fe;
-    --font-family: 'Caveat', 'Indie Flower', cursive;
-    --tile-radius: 0;
-    --tile-font-weight: bold;
-    --cell-border: none;
-    --tile-border: none;
 }
 
 html, body {
@@ -1028,60 +966,6 @@ body {
     font-size: 0.8rem;
 }
 
-/* Windows XP special effects */
-.theme-winxp .tile {
-    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5),
-                inset -1px -1px 0 rgba(0, 0, 0, 0.1),
-                1px 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.theme-winxp .btn {
-    background: linear-gradient(180deg, #fff 0%, #ece9d8 50%, #d4d0c8 100%);
-    border: 1px solid #003c74;
-    border-radius: 3px;
-    box-shadow: inset 1px 1px 0 #fff;
-    color: #000;
-}
-
-.theme-winxp .score-box {
-    border-radius: 3px;
-    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.theme-winxp .title-digits {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    font-weight: bold;
-}
-
-.theme-winxp .title-digits .d-2 { color: #f03030; }
-.theme-winxp .title-digits .d-0 { color: #00a000; }
-.theme-winxp .title-digits .d-4 { color: #0060d0; }
-.theme-winxp .title-digits .d-8 { color: #ffb800; }
-
-.theme-winxp .title-fusion {
-    color: #fff;
-    font-weight: bold;
-    font-style: italic;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.theme-winxp .game-container {
-    border-radius: 3px;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.theme-winxp select {
-    background: #fff;
-    border: 1px solid #7f9db9;
-    border-radius: 0;
-    color: #000;
-}
-
-.theme-winxp .theme-selector label {
-    color: #fff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
 /* Whiteboard special effects */
 .theme-whiteboard .tile {
     border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%;
@@ -1180,58 +1064,6 @@ body {
     border: 3px solid #5d4e37;
     border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
     transform: rotate(1deg);
-}
-
-/* Crayon special effects */
-.theme-crayon .tile {
-    border-radius: 35% 65% 60% 40% / 50% 50% 60% 40%;
-    box-shadow:
-        inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 4px rgba(0, 0, 0, 0.1),
-        3px 3px 0 rgba(0, 0, 0, 0.1);
-    transform: rotate(-1deg);
-}
-
-.theme-crayon .tile:nth-child(odd) {
-    border-radius: 60% 40% 45% 55% / 55% 45% 55% 45%;
-    transform: rotate(1.5deg);
-}
-
-.theme-crayon .cell {
-    border: none;
-}
-
-.theme-crayon .btn {
-    border: none;
-    border-radius: 40% 60% 55% 45% / 50% 50% 55% 45%;
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
-    transform: rotate(-0.5deg);
-}
-
-.theme-crayon .title-digits {
-    font-size: 5rem;
-    transform: rotate(-2deg);
-}
-
-.theme-crayon .title-digits .d-2 { color: #e53935; text-shadow: 3px 3px 0 #ffcc80; }
-.theme-crayon .title-digits .d-0 { color: #7cb342; text-shadow: 3px 3px 0 #81d4fa; }
-.theme-crayon .title-digits .d-4 { color: #1e88e5; text-shadow: 3px 3px 0 #ffcc80; }
-.theme-crayon .title-digits .d-8 { color: #ff9800; text-shadow: 3px 3px 0 #81d4fa; }
-
-.theme-crayon .title-fusion {
-    transform: rotate(1deg);
-    color: #8e24aa;
-}
-
-.theme-crayon .game-container {
-    border: none;
-    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
-    transform: rotate(0.3deg);
-}
-
-.theme-crayon .score-box {
-    border-radius: 50% 50% 45% 55% / 45% 55% 50% 50%;
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Cherry Blossom special effects */
@@ -1641,6 +1473,20 @@ body {
     .instructions-mobile {
         display: block;
     }
+}
+
+.about-link {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-color);
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+.about-link:hover {
+    opacity: 0.8;
 }
 
 /* Score addition animation */

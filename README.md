@@ -20,14 +20,14 @@ Works offline. Install it on any device:
 | Classic | Neon | Vice |
 | ![Glassmorphism](screenshots/glass.png) | ![Aurora](screenshots/aurora.png) | ![Minesweeper](screenshots/minesweeper.png) |
 | Glassmorphism | Aurora | Minesweeper |
-| ![Terminal](screenshots/terminal.png) | ![Game Boy](screenshots/gameboy.png) | ![Windows XP](screenshots/winxp.png) |
-| Terminal | Game Boy | Windows XP |
-| ![Kids Drawing](screenshots/kids.png) | ![Crayon](screenshots/crayon.png) | ![Blueprint](screenshots/blueprint.png) |
-| Kids Drawing | Crayon | Blueprint |
-| ![Whiteboard](screenshots/whiteboard.png) | ![Cherry Blossom](screenshots/cherry-blossom.png) | ![Ocean](screenshots/ocean.png) |
-| Whiteboard | Cherry Blossom | Ocean |
-| ![Forest](screenshots/forest.png) | ![Sunset](screenshots/sunset.png) | ![Lavender](screenshots/lavender.png) |
-| Forest | Sunset | Lavender |
+| ![Terminal](screenshots/terminal.png) | ![Game Boy](screenshots/gameboy.png) | ![Kindergarten](screenshots/kids.png) |
+| Terminal | Game Boy | Kindergarten |
+| ![Blueprint](screenshots/blueprint.png) | ![Whiteboard](screenshots/whiteboard.png) | ![Cherry Blossom](screenshots/cherry-blossom.png) |
+| Blueprint | Whiteboard | Cherry Blossom |
+| ![Ocean](screenshots/ocean.png) | ![Forest](screenshots/forest.png) | ![Sunset](screenshots/sunset.png) |
+| Ocean | Forest | Sunset |
+| ![Lavender](screenshots/lavender.png) | | |
+| Lavender | | |
 
 ## Controls
 
