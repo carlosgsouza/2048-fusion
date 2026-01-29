@@ -1,0 +1,261 @@
+@use 'base/variables';
+@use 'themes/neon';
+@use 'themes/vaporwave';
+@use 'themes/terminal';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    height: 100%;
+    overflow: hidden;
+}
+
+html {
+    height: 100%;
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.title-digits {
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--title-color);
+    transition: color 0.3s ease;
+
+    .digit {
+        display: inline-block;
+    }
+}
+
+.title-fusion {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--title-color);
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+.scores {
+    display: flex;
+    gap: 10px;
+}
+
+.score-box {
+    background-color: var(--score-bg);
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-align: center;
+    min-width: 80px;
+    transition: background-color 0.3s ease;
+}
+
+.score-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+    opacity: 0.7;
+}
+
+.score-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-light);
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.btn {
+    background-color: var(--btn-bg);
+    color: var(--text-light);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    &:hover:not(:disabled) {
+        background-color: var(--btn-hover);
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.98);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.theme-selector {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    label {
+        font-size: 0.8rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    select {
+        padding: 6px 8px;
+        border-radius: 6px;
+        border: none;
+        background-color: var(--btn-bg);
+        color: var(--text-light);
+        font-size: 0.8rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        cursor: pointer;
+        max-width: 130px;
+    }
+}
+
+.game-container {
+    position: relative;
+    background-color: var(--container-bg);
+    border-radius: 6px;
+    padding: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 15px;
+    aspect-ratio: 1;
+}
+
+.cell {
+    background-color: var(--cell-bg);
+    border-radius: var(--tile-radius);
+    border: var(--cell-border);
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
+}
+
+.tile {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: var(--tile-font-weight);
+    border-radius: var(--tile-radius);
+    transition: top 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        left 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        border-radius 0.3s ease;
+    user-select: none;
+    border: var(--tile-border);
+    z-index: 10;
+}
+
+.tile-2 {
+    background-color: var(--tile-2);
+    color: var(--text-color);
+}
+
+.tile-4 {
+    background-color: var(--tile-4);
+    color: var(--text-color);
+}
+
+.tile-8 {
+    background-color: var(--tile-8);
+    color: var(--text-light);
+}
+
+.tile-16 {
+    background-color: var(--tile-16);
+    color: var(--text-light);
+}
+
+.tile-32 {
+    background-color: var(--tile-32);
+    color: var(--text-light);
+}
+
+.tile-64 {
+    background-color: var(--tile-64);
+    color: var(--text-light);
+}
+
+.tile-128 {
+    background-color: var(--tile-128);
+    color: var(--text-light);
+    font-size: 2rem;
+}
+
+.tile-256 {
+    background-color: var(--tile-256);
+    color: var(--text-light);
+    font-size: 2rem;
+}
+
+.tile-512 {
+    background-color: var(--tile-512);
+    color: var(--text-light);
+    font-size: 2rem;
+}
+
+.tile-1024 {
+    background-color: var(--tile-1024);
+    color: var(--text-light);
+    font-size: 1.75rem;
+}
+
+.tile-2048 {
+    background-color: var(--tile-2048);
+    color: var(--text-light);
+    font-size: 1.75rem;
+}
+
+.tile-super {
+    background-color: var(--tile-super);
+    color: var(--text-light);
+    font-size: 1.5rem;
+}
+
+/* ... More transition/animation classes would go here ... */
