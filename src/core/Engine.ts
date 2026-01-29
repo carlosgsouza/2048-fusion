@@ -1,4 +1,4 @@
-import { Tile, Position, GameState } from './types';
+import { Tile, Position } from './types';
 
 export class Engine {
     private size: number = 4;

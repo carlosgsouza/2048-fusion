@@ -73,8 +73,8 @@ export class Renderer {
             if (!currentTileIds.has(id)) el.remove();
         });
 
-        grid.forEach((row, rIdx) => {
-            row.forEach((tile, cIdx) => {
+        grid.forEach((row) => {
+            row.forEach((tile) => {
                 if (!tile) return;
                 if (tile.mergedFrom) {
                     tile.mergedFrom.forEach(mergedTile => {

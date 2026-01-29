@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="2048 Fusion">
+    <meta name="theme-color" content="#ff00ff">
+    <title>2048 Fusion</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Indie+Flower&family=Patrick+Hand&family=Pacifico&family=Dancing+Script:wght@400;700&family=Press+Start+2P&family=Monoton&family=Bebas+Neue&family=Great+Vibes&family=Neonderthaw&family=Tilt+Neon&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-d7ORSDgP.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CYrZ0FU1.css">
+<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">
+                <span class="title-digits">
+                    <span class="digit d-2">2</span><span class="digit d-0">0</span><span class="digit d-4">4</span><span class="digit d-8">8</span>
+                </span>
+                <span class="title-fusion">Fusion</span>
+            </h1>
+            <div class="scores">
+                <div class="score-box">
+                    <span class="score-label">Score</span>
+                    <span class="score-value" id="score">0</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">Best</span>
+                    <span class="score-value" id="best-score">0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <button class="btn" id="new-game">New Game</button>
+            <button class="btn" id="undo" disabled><span class="undo-text">Undo</span><span class="undo-icon">↩</span></button>
+            <div class="theme-selector">
+                <label for="theme">Theme:</label>
+                <select id="theme">
+                    <option value="classic">Classic</option>
+                    <option disabled>──────────</option>
+                    <option value="neon">Neon</option>
+                    <option value="vaporwave">Vice</option>
+                    <option value="glass">Glassmorphism</option>
+                    <option value="aurora">Aurora</option>
+                    <option disabled>──────────</option>
+                    <option value="minesweeper">Minesweeper</option>
+                    <option value="terminal">Terminal</option>
+                    <option disabled>──────────</option>
+                    <option value="kids">Kindergarten</option>
+                    <option value="blueprint">Blueprint</option>
+                    <option value="whiteboard">Whiteboard</option>
+                    <option value="cherry-blossom">Cherry Blossom</option>
+                    <option disabled>──────────</option>
+                    <option value="ocean">Ocean</option>
+                    <option value="forest">Forest</option>
+                    <option value="sunset">Sunset</option>
+                    <option value="lavender">Lavender</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <div class="grid" id="grid">
+                <!-- Tiles will be inserted here -->
+            </div>
+            <div class="game-message" id="game-message">
+                <p></p>
+                <button class="btn" id="retry">Try Again</button>
+            </div>
+        </div>
+
+        <div class="instructions instructions-desktop">
+            <p>Use <strong>arrow keys</strong> to move tiles. Press <strong>Ctrl+Z</strong> to undo.</p>
+        </div>
+        <div class="instructions instructions-mobile">
+            <p><strong>Swipe</strong> to move tiles</p>
+        </div>
+        <a href="https://github.com/carlosgsouza/2048-fusion" class="about-link" target="_blank">About</a>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker registered'))
+                .catch((err) => console.log('Service Worker registration failed:', err));
+        }
+    </script>
+</body>
+</html>
