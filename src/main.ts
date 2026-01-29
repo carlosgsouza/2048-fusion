@@ -3,11 +3,13 @@ import { Engine } from './core/Engine';
 import { Renderer } from './core/Renderer';
 import { Storage } from './core/Storage';
 import { InputHandler } from './core/InputHandler';
+import { SoundManager } from './core/SoundManager';
 import { GameState } from './core/types';
 
 class App {
     private engine: Engine;
     private renderer: Renderer;
+    private soundManager: SoundManager;
     private history: GameState[] = [];
     private maxHistoryLength: number = 50;
     private isAnimating: boolean = false;
@@ -20,10 +22,12 @@ class App {
     constructor() {
         this.engine = new Engine();
         this.renderer = new Renderer();
+        this.soundManager = new SoundManager();
         this.bestScore = Storage.getBestScore();
 
         document.getElementById('new-game')?.addEventListener('click', () => this.newGame());
         document.getElementById('undo')?.addEventListener('click', () => this.undo());
+        document.getElementById('mute-toggle')?.addEventListener('click', () => this.toggleMute());
 
         new InputHandler(
             (dir) => this.handleMove(dir),
@@ -31,6 +35,7 @@ class App {
             document.getElementById('grid')!
         );
 
+        this.updateMuteButton();
         this.initFromUrl();
     }
 
@@ -128,16 +133,26 @@ class App {
 
         this.saveState();
         this.engine.prepareTiles();
-        const { moved, winDetected } = this.engine.move(direction);
+        const { moved, winDetected, mergedValues } = this.engine.move(direction);
 
         if (moved) {
             if (winDetected) this.hasWon = true;
+
+            // Play sound for the highest merged value
+            if (mergedValues.length > 0) {
+                const highestMerge = Math.max(...mergedValues);
+                this.soundManager.playMerge(highestMerge);
+            }
+
             this.isAnimating = true;
             this.renderer.render(this.engine.getGrid());
 
             setTimeout(() => {
                 const newTile = this.engine.addRandomTile();
-                if (newTile) this.renderer.renderTile(newTile, newTile.row, newTile.col, true, false);
+                if (newTile) {
+                    this.renderer.renderTile(newTile, newTile.row, newTile.col, true, false);
+                    this.soundManager.playSpawn();
+                }
 
                 if (this.debugMode) {
                     Storage.updateUrlState(this.encodeState(), true);
@@ -163,6 +178,7 @@ class App {
             this.history.pop();
             this.renderer.updateUndoButton(this.history.length === 0);
             this.renderer.showInvalidMoveAnimation(direction);
+            this.soundManager.playInvalidMove();
         }
     }
 
@@ -215,6 +231,19 @@ class App {
             rows.push(rowStr);
         }
         return this.engine.getScore().toString(10) + ':' + rows.join('|');
+    }
+
+    private toggleMute(): void {
+        this.soundManager.toggleMute();
+        this.updateMuteButton();
+    }
+
+    private updateMuteButton(): void {
+        const muteButton = document.getElementById('mute-toggle');
+        if (muteButton) {
+            muteButton.textContent = this.soundManager.isSoundMuted() ? '🔇' : '🔊';
+            muteButton.setAttribute('aria-label', this.soundManager.isSoundMuted() ? 'Unmute' : 'Mute');
+        }
     }
 }
 
