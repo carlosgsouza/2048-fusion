@@ -37,25 +37,63 @@ class App {
     private initFromUrl(): void {
         const urlParams = new URLSearchParams(window.location.search);
         this.debugMode = urlParams.get('debug') === 'true';
+        const test = urlParams.get('test');
         const state = urlParams.get('state');
 
-        if (state) {
+        if (test) {
+            this.loadStateFromTest(test);
+        } else if (state) {
             this.loadStateFromString(state);
         } else {
             this.newGame();
         }
     }
 
+    private loadStateFromTest(type: string): void {
+        const gridValues: number[][] = Array(4).fill(0).map(() => Array(4).fill(0));
+        let score = 0;
+
+        if (type === 'win') type = '2048';
+
+        if (type === 'lose') {
+            return this.loadStateFromString('0:123a|4569|7658|89a0');
+        } else {
+            const target = parseInt(type, 10);
+            if (!isNaN(target) && target > 2) {
+                const n = Math.log2(target);
+                const tiles: number[] = [Math.pow(2, n - 1), Math.pow(2, n - 1)];
+                for (let i = 1; i <= n - 2; i++) {
+                    tiles.push(Math.pow(2, i));
+                }
+                tiles.forEach((val, i) => {
+                    gridValues[Math.floor(i / 4)][i % 4] = val;
+                    score += val;
+                });
+            } else {
+                return this.newGame();
+            }
+        }
+
+        this.engine.restoreGrid(gridValues);
+        this.engine.setScore(score);
+        this.history = [];
+        this.gameOver = false;
+        this.hasWon = false;
+        this.keepPlaying = false;
+        this.updateUI();
+    }
+
     private loadStateFromString(stateStr: string): void {
-        // Simple implementation for now, mirroring original logic
         try {
-            const [scoreStr, gridStr] = stateStr.split('-');
-            const score = parseInt(scoreStr, 36);
+            const [scoreStr, gridStr] = stateStr.split(':');
+            const score = parseInt(scoreStr, 10);
             const gridValues: number[][] = [];
+            const rows = gridStr.split('|');
+
             for (let row = 0; row < 4; row++) {
                 gridValues[row] = [];
                 for (let col = 0; col < 4; col++) {
-                    const encoded = parseInt(gridStr[row * 4 + col], 16);
+                    const encoded = parseInt(rows[row][col], 16);
                     gridValues[row][col] = encoded === 0 ? 0 : Math.pow(2, encoded);
                 }
             }
@@ -144,6 +182,9 @@ class App {
         this.gameOver = false;
         this.renderer.hideGameMessage();
         this.updateUI();
+        if (this.debugMode) {
+            Storage.updateUrlState(this.encodeState(), true);
+        }
     }
 
     private saveState(): void {
@@ -163,11 +204,16 @@ class App {
 
     private encodeState(): string {
         const values = this.engine.getGridValues();
-        let gridStr = '';
-        values.flat().forEach(v => {
-            gridStr += (v === 0 ? 0 : Math.log2(v)).toString(16);
-        });
-        return this.engine.getScore().toString(36) + '-' + gridStr;
+        const rows: string[] = [];
+        for (let r = 0; r < 4; r++) {
+            let rowStr = '';
+            for (let c = 0; c < 4; c++) {
+                const v = values[r][c];
+                rowStr += (v === 0 ? 0 : Math.log2(v)).toString(16);
+            }
+            rows.push(rowStr);
+        }
+        return this.engine.getScore().toString(10) + ':' + rows.join('|');
     }
 }
 
