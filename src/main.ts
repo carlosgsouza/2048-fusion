@@ -115,6 +115,7 @@ class App {
         this.gameOver = false;
         this.hasWon = false;
         this.keepPlaying = false;
+        Storage.clearUrlState();
         this.renderer.hideGameMessage();
         this.renderer.clearTiles();
         this.engine.addRandomTile();
@@ -146,9 +147,9 @@ class App {
                     this.isAnimating = false;
                     if (!this.engine.movesAvailable()) {
                         this.gameOver = true;
-                        this.renderer.showGameMessage('Game Over!', false, (kp) => this.handleRetry(kp));
+                        this.renderer.showGameMessage('Game Over!', false, (kp) => this.handleRetry(kp), undefined, () => this.undo());
                     } else if (this.hasWon && !this.keepPlaying) {
-                        this.renderer.showGameMessage('You Win!', true, (kp) => this.handleRetry(kp));
+                        this.renderer.showGameMessage('You Win!', true, (kp) => this.handleRetry(kp), () => this.newGame());
                     }
                 }, 100);
             }, 150);

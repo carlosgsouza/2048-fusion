@@ -39,8 +39,7 @@
 
         <div class="controls">
             <button class="btn" id="new-game">New Game</button>
-            <button class="btn" id="undo" disabled><span class="undo-text">Undo</span><span
-                    class="undo-icon">↩</span></button>
+            <button class="btn" id="undo" disabled>Undo</button>
         </div>
 
         <div class="game-container">
@@ -49,7 +48,11 @@
             </div>
             <div class="game-message" id="game-message">
                 <p></p>
-                <button class="btn" id="retry">Try Again</button>
+                <div class="message-actions">
+                    <button class="btn" id="retry">Keep Playing</button>
+                    <button class="btn btn-secondary" id="win-new-game">New Game</button>
+                    <button class="btn btn-tertiary" id="game-over-undo">Undo</button>
+                </div>
             </div>
         </div>
 

@@ -13,7 +13,18 @@ export class Storage {
     static updateUrlState(state: string, debugMode: boolean): void {
         if (!debugMode) return;
         const url = new URL(window.location.href);
-        url.searchParams.set('state', state);
+        if (state) {
+            url.searchParams.set('state', state);
+        } else {
+            url.searchParams.delete('state');
+        }
         window.history.replaceState({}, '', url);
+    }
+
+    static clearUrlState(): void {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('state');
+        url.searchParams.delete('test');
+        window.history.replaceState({}, '', url.pathname + url.search);
     }
 }

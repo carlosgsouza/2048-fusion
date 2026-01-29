@@ -87,10 +87,11 @@ export class Engine {
         }
     }
 
-    move(direction: 'up' | 'down' | 'left' | 'right'): { moved: boolean, scoreGain: number, winDetected: boolean } {
+    move(direction: 'up' | 'down' | 'left' | 'right'): { moved: boolean, scoreGain: number, winDetected: boolean, mergedValues: number[] } {
         let moved = false;
         let scoreGain = 0;
         let winDetected = false;
+        const mergedValues: number[] = [];
 
         const vectors: Record<string, { row: number; col: number }> = {
             up: { row: -1, col: 0 },
@@ -124,6 +125,7 @@ export class Engine {
                         tile.col = next.col;
 
                         scoreGain += merged.value;
+                        mergedValues.push(merged.value);
                         moved = true;
 
                         if (merged.value === 2048) {
@@ -147,7 +149,7 @@ export class Engine {
             this.score += scoreGain;
         }
 
-        return { moved, scoreGain, winDetected };
+        return { moved, scoreGain, winDetected, mergedValues };
     }
 
     private buildTraversals(vector: { row: number; col: number }): { rows: number[]; cols: number[] } {

@@ -6,7 +6,10 @@ export class Renderer {
     private bestScoreElement: HTMLElement;
     private gameMessage: HTMLElement;
     private retryButton: HTMLButtonElement;
+    private winNewGameButton: HTMLButtonElement;
+    private gameOverUndoButton: HTMLButtonElement;
     private undoButton: HTMLButtonElement;
+    private container: HTMLElement;
     private size: number = 4;
     private animationDuration: number = 150;
 
@@ -16,7 +19,10 @@ export class Renderer {
         this.bestScoreElement = document.getElementById('best-score')!;
         this.gameMessage = document.getElementById('game-message')!;
         this.retryButton = document.getElementById('retry') as HTMLButtonElement;
+        this.winNewGameButton = document.getElementById('win-new-game') as HTMLButtonElement;
+        this.gameOverUndoButton = document.getElementById('game-over-undo') as HTMLButtonElement;
         this.undoButton = document.getElementById('undo') as HTMLButtonElement;
+        this.container = document.querySelector('.container')!;
         this.setupGrid();
     }
 
@@ -148,16 +154,35 @@ export class Renderer {
         setTimeout(() => gameContainer.classList.remove(`shake-${direction}`), 200);
     }
 
-    showGameMessage(message: string, isWin: boolean, onRetry: (keepPlaying: boolean) => void): void {
+    showGameMessage(message: string, isWin: boolean, onRetry: (keepPlaying: boolean) => void, onNewGame?: () => void, onUndo?: () => void): void {
         const messageText = this.gameMessage.querySelector('p')!;
         messageText.textContent = message;
+
+        // Add overlay-active class to blur controls
+        this.container.classList.add('overlay-active');
 
         if (isWin) {
             this.retryButton.textContent = 'Keep Playing';
             this.retryButton.onclick = () => onRetry(true);
+
+            this.winNewGameButton.style.display = 'inline-block';
+            if (onNewGame) {
+                this.winNewGameButton.onclick = () => onNewGame();
+            }
+
+            this.gameOverUndoButton.style.display = 'none';
         } else {
             this.retryButton.textContent = 'Try Again';
             this.retryButton.onclick = () => onRetry(false);
+            this.winNewGameButton.style.display = 'none';
+
+            // Show Undo button on game over if callback provided
+            if (onUndo) {
+                this.gameOverUndoButton.style.display = 'inline-block';
+                this.gameOverUndoButton.onclick = () => onUndo();
+            } else {
+                this.gameOverUndoButton.style.display = 'none';
+            }
         }
 
         this.gameMessage.classList.add('active');
@@ -165,5 +190,6 @@ export class Renderer {
 
     hideGameMessage(): void {
         this.gameMessage.classList.remove('active');
+        this.container.classList.remove('overlay-active');
     }
 }

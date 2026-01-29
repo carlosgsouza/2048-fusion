@@ -120,6 +120,13 @@ body {
     gap: 10px;
     margin-bottom: 20px;
     justify-content: flex-start;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.container.overlay-active .controls {
+    filter: blur(4px);
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .btn {
@@ -287,6 +294,31 @@ body {
         color: #fff;
         margin-bottom: 20px;
         text-shadow: 0 0 20px var(--title-color);
+    }
+
+    .message-actions {
+        display: flex;
+        gap: 15px;
+    }
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #00ffff, #00b7ff) !important;
+    border-color: #00b7ff !important;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2) !important;
+
+    &:hover:not(:disabled) {
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3) !important;
+    }
+}
+
+.btn-tertiary {
+    background: linear-gradient(135deg, #ff6600, #ff9933) !important;
+    border-color: #ff9933 !important;
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2) !important;
+
+    &:hover:not(:disabled) {
+        box-shadow: 0 0 25px rgba(255, 102, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3) !important;
     }
 }
 
