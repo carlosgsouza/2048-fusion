@@ -27,15 +27,12 @@ Works offline. Install it on any device:
 ```bash
 git clone https://github.com/carlosgsouza/2048-fusion.git
 cd 2048-fusion
-open index.html
+npm install
+npm run dev
 ```
 
-No build step. Pure HTML, CSS, TypeScript.
+Built with Vite, TypeScript, and SCSS.
 
 ## License
 
 [Apache 2.0](LICENSE)
-
----
-
-Vibecoded with [Claude Code](https://claude.ai/code)
