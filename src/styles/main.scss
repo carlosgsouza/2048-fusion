@@ -1,12 +1,16 @@
 @use 'base/variables';
-@use 'themes/neon';
-@use 'themes/vaporwave';
-@use 'themes/terminal';
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
 }
 
 body {
@@ -18,12 +22,6 @@ body {
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s ease;
-    height: 100%;
-    overflow: hidden;
-}
-
-html {
-    height: 100%;
 }
 
 .container {
@@ -32,6 +30,7 @@ html {
     padding: 20px;
 }
 
+/* Header */
 .header {
     display: flex;
     justify-content: space-between;
@@ -47,26 +46,44 @@ html {
 }
 
 .title-digits {
-    font-size: 4rem;
-    font-weight: bold;
-    color: var(--title-color);
-    transition: color 0.3s ease;
+    font-family: 'Neonderthaw', cursive;
+    font-size: 5rem;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 20px var(--title-color), 0 0 40px var(--title-color);
+    animation: neon-flicker 3s infinite;
 
-    .digit {
-        display: inline-block;
+    .d-2 {
+        color: #ff00ff;
+        text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+    }
+
+    .d-0 {
+        color: #00ffff;
+        text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+    }
+
+    .d-4 {
+        color: #ff6600;
+        text-shadow: 0 0 20px #ff6600, 0 0 40px #ff6600;
+    }
+
+    .d-8 {
+        color: #00ff66;
+        text-shadow: 0 0 20px #00ff66, 0 0 40px #00ff66;
     }
 }
 
 .title-fusion {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.8rem;
+    color: #f8f8f8 !important;
+    /* Ensure it's almost white as requested */
+    text-shadow: 0 0 10px #fff, 0 0 20px rgba(255, 255, 255, 0.5);
     letter-spacing: 0.3em;
+    font-weight: 400;
     text-transform: uppercase;
-    color: var(--title-color);
-    opacity: 0.8;
-    margin-top: 2px;
 }
 
+/* Scores */
 .scores {
     display: flex;
     gap: 10px;
@@ -74,11 +91,12 @@ html {
 
 .score-box {
     background-color: var(--score-bg);
-    padding: 10px 20px;
+    padding: 10px 15px;
     border-radius: 6px;
     text-align: center;
     min-width: 80px;
-    transition: background-color 0.3s ease;
+    border: 2px solid rgba(255, 0, 255, 0.6);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 40px rgba(255, 105, 180, 0.2);
 }
 
 .score-label {
@@ -96,27 +114,30 @@ html {
     color: var(--text-light);
 }
 
+/* Controls */
 .controls {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 20px;
-    align-items: center;
-    flex-wrap: nowrap;
+    justify-content: flex-start;
 }
 
 .btn {
-    background-color: var(--btn-bg);
-    color: var(--text-light);
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
+    background: linear-gradient(135deg, #ff00ff, #ff69b4);
+    border: 2px solid #ff69b4;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    transition: all 0.2s ease;
 
     &:hover:not(:disabled) {
-        background-color: var(--btn-hover);
+        box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.3);
+        transform: scale(1.02);
     }
 
     &:active:not(:disabled) {
@@ -126,39 +147,16 @@ html {
     &:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+        box-shadow: none;
     }
 }
 
-.theme-selector {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    label {
-        font-size: 0.8rem;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    }
-
-    select {
-        padding: 6px 8px;
-        border-radius: 6px;
-        border: none;
-        background-color: var(--btn-bg);
-        color: var(--text-light);
-        font-size: 0.8rem;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-        cursor: pointer;
-        max-width: 130px;
-    }
-}
-
+/* Game Grid */
 .game-container {
     position: relative;
     background-color: var(--container-bg);
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 15px;
-    transition: background-color 0.3s ease;
 }
 
 .grid {
@@ -173,7 +171,6 @@ html {
     background-color: var(--cell-bg);
     border-radius: var(--tile-radius);
     border: var(--cell-border);
-    transition: background-color 0.3s ease, border-radius 0.3s ease;
 }
 
 .tile {
@@ -186,76 +183,305 @@ html {
     border-radius: var(--tile-radius);
     transition: top 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
         left 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        border-radius 0.3s ease;
+        transform 0.1s ease;
     user-select: none;
     border: var(--tile-border);
+    box-shadow: var(--tile-shadow);
+    text-shadow: 0 0 5px currentColor;
     z-index: 10;
 }
 
 .tile-2 {
     background-color: var(--tile-2);
-    color: var(--text-color);
+    color: #fff;
 }
 
 .tile-4 {
     background-color: var(--tile-4);
-    color: var(--text-color);
+    color: #fff;
 }
 
 .tile-8 {
     background-color: var(--tile-8);
-    color: var(--text-light);
+    color: #fff;
 }
 
 .tile-16 {
     background-color: var(--tile-16);
-    color: var(--text-light);
+    color: #fff;
 }
 
 .tile-32 {
     background-color: var(--tile-32);
-    color: var(--text-light);
+    color: #fff;
 }
 
 .tile-64 {
     background-color: var(--tile-64);
-    color: var(--text-light);
+    color: #fff;
 }
 
 .tile-128 {
     background-color: var(--tile-128);
-    color: var(--text-light);
+    color: #fff;
     font-size: 2rem;
 }
 
 .tile-256 {
     background-color: var(--tile-256);
-    color: var(--text-light);
+    color: #fff;
     font-size: 2rem;
 }
 
 .tile-512 {
     background-color: var(--tile-512);
-    color: var(--text-light);
+    color: #fff;
     font-size: 2rem;
 }
 
 .tile-1024 {
     background-color: var(--tile-1024);
-    color: var(--text-light);
+    color: #fff;
     font-size: 1.75rem;
 }
 
 .tile-2048 {
     background-color: var(--tile-2048);
-    color: var(--text-light);
+    color: #fff;
     font-size: 1.75rem;
 }
 
 .tile-super {
     background-color: var(--tile-super);
-    color: var(--text-light);
+    color: #fff;
     font-size: 1.5rem;
 }
 
-/* ... More transition/animation classes would go here ... */
+/* Game Message Overlay */
+.game-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    p {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 20px;
+        text-shadow: 0 0 20px var(--title-color);
+    }
+}
+
+/* Instructions */
+.instructions {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-align: center;
+    line-height: 1.6;
+
+    strong {
+        color: #ff69b4;
+        text-shadow: 0 0 5px #ff69b4;
+    }
+}
+
+.instructions-desktop {
+    display: block;
+}
+
+.instructions-mobile {
+    display: none;
+}
+
+@media (max-width: 520px) {
+    .instructions-desktop {
+        display: none;
+    }
+
+    .instructions-mobile {
+        display: block;
+    }
+
+    .title-digits {
+        font-size: 3.5rem;
+    }
+
+    .title-fusion {
+        font-size: 1.4rem;
+    }
+}
+
+/* Footer Link */
+.about-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 1;
+        text-shadow: 0 0 10px #fff;
+    }
+}
+
+/* Animations */
+@keyframes neon-flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 1;
+        text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.7;
+        text-shadow: 0 0 10px currentColor;
+    }
+}
+
+.tile-new {
+    animation: appear 200ms ease 100ms;
+    animation-fill-mode: backwards;
+}
+
+.tile-merged {
+    z-index: 20;
+    animation: pop 200ms ease;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Shake animations for invalid moves */
+@keyframes shake-left {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+.shake-left {
+    animation: shake-left 0.2s;
+}
+
+@keyframes shake-right {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+}
+
+.shake-right {
+    animation: shake-right 0.2s;
+}
+
+@keyframes shake-up {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-10px);
+    }
+
+    75% {
+        transform: translateY(10px);
+    }
+}
+
+.shake-up {
+    animation: shake-up 0.2s;
+}
+
+@keyframes shake-down {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(10px);
+    }
+
+    75% {
+        transform: translateY(-10px);
+    }
+}
+
+.shake-down {
+    animation: shake-down 0.2s;
+}

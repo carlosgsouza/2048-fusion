@@ -22,19 +22,6 @@ class App {
         this.renderer = new Renderer();
         this.bestScore = Storage.getBestScore();
 
-        const themeSelect = document.getElementById('theme') as HTMLSelectElement;
-        const currentTheme = Storage.getTheme();
-        themeSelect.value = currentTheme;
-        this.applyTheme(currentTheme);
-
-        themeSelect.addEventListener('change', (e) => {
-            const theme = (e.target as HTMLSelectElement).value;
-            this.applyTheme(theme);
-            Storage.saveTheme(theme);
-            this.renderer.render(this.engine.getGrid());
-            themeSelect.blur();
-        });
-
         document.getElementById('new-game')?.addEventListener('click', () => this.newGame());
         document.getElementById('undo')?.addEventListener('click', () => this.undo());
 
@@ -45,13 +32,6 @@ class App {
         );
 
         this.initFromUrl();
-    }
-
-    private applyTheme(theme: string): void {
-        document.body.className = '';
-        if (theme !== 'classic') {
-            document.body.classList.add(`theme-${theme}`);
-        }
     }
 
     private initFromUrl(): void {

@@ -1,30 +1,30 @@
 :root {
-    /* Classic theme (default) */
-    --bg-color: #faf8ef;
-    --container-bg: #bbada0;
-    --text-color: #776e65;
-    --text-light: #f9f6f2;
-    --btn-bg: #8f7a66;
-    --btn-hover: #9f8b77;
-    --cell-bg: rgba(238, 228, 218, 0.35);
-    --tile-2: #eee4da;
-    --tile-4: #ede0c8;
-    --tile-8: #f2b179;
-    --tile-16: #f59563;
-    --tile-32: #f67c5f;
-    --tile-64: #f65e3b;
-    --tile-128: #edcf72;
-    --tile-256: #edcc61;
-    --tile-512: #edc850;
-    --tile-1024: #edc53f;
-    --tile-2048: #edc22e;
-    --tile-super: #edc22e;
-    --tile-shadow: rgba(0, 0, 0, 0.1);
-    --title-color: #776e65;
-    --score-bg: #bbada0;
-    --font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-    --tile-radius: 6px;
+    /* Neon theme (default) */
+    --bg-color: #0a0a0f;
+    --container-bg: #1a1a2e;
+    --text-color: #fff;
+    --text-light: #fff;
+    --btn-bg: #e94560;
+    --btn-hover: #ff6b6b;
+    --cell-bg: rgba(255, 255, 255, 0.05);
+    --tile-2: #ff00ff;
+    --tile-4: #00ffff;
+    --tile-8: #ff6600;
+    --tile-16: #ff0066;
+    --tile-32: #6600ff;
+    --tile-64: #00ff66;
+    --tile-128: #e6b800;
+    --tile-256: #ff3399;
+    --tile-512: #33ff99;
+    --tile-1024: #9933ff;
+    --tile-2048: #ff9933;
+    --tile-super: #ff9933;
+    --tile-shadow: 0 0 20px currentColor;
+    --title-color: #e94560;
+    --score-bg: #16213e;
+    --font-family: 'Tilt Neon', sans-serif;
+    --tile-radius: 8px;
     --tile-font-weight: bold;
-    --cell-border: none;
-    --tile-border: none;
+    --cell-border: 1px solid rgba(255, 255, 255, 0.1);
+    --tile-border: 2px solid currentColor;
 }
