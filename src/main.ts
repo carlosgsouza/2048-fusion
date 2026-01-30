@@ -138,10 +138,9 @@ class App {
         if (moved) {
             if (winDetected) this.hasWon = true;
 
-            // Play sound for the highest merged value
+            // Play harp sound for any merge
             if (mergedValues.length > 0) {
-                const highestMerge = Math.max(...mergedValues);
-                this.soundManager.playMerge(highestMerge);
+                this.soundManager.playMerge();
             }
 
             this.isAnimating = true;

@@ -3,22 +3,6 @@ export class SoundManager {
     private isMuted: boolean = false;
     private isInitialized: boolean = false;
 
-    // Map tile values to frequencies (using a pentatonic-ish scale for pleasant sound)
-    private readonly frequencyMap: Record<number, number> = {
-        2: 220.00,    // A3
-        4: 246.94,    // B3
-        8: 277.18,    // C#4
-        16: 311.13,   // D#4
-        32: 349.23,   // F4
-        64: 392.00,   // G4
-        128: 440.00,  // A4
-        256: 493.88,  // B4
-        512: 554.37,  // C#5
-        1024: 622.25, // D#5
-        2048: 698.46, // F5
-        4096: 783.99, // G5
-        8192: 880.00  // A5
-    };
 
     constructor() {
         this.loadMutePreference();
@@ -53,33 +37,69 @@ export class SoundManager {
         return this.audioContext;
     }
 
-    playMerge(value: number): void {
+    playMerge(): void {
         if (this.isMuted) return;
 
         const ctx = this.ensureAudioContext();
         if (!ctx) return;
 
-        const frequency = this.frequencyMap[value] || 440;
         const now = ctx.currentTime;
 
-        // Create oscillator for the main tone
-        const oscillator = ctx.createOscillator();
-        oscillator.type = 'square'; // Retro square wave sound
-        oscillator.frequency.setValueAtTime(frequency, now);
+        // Fixed gentle harp sound
+        const note1Freq = 659.25; // E5
+        const note2Freq = 880.00; // A5
 
-        // Create gain node for envelope
-        const gainNode = ctx.createGain();
-        gainNode.gain.setValueAtTime(0, now);
-        gainNode.gain.linearRampToValueAtTime(0.15, now + 0.01); // Quick attack
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15); // Decay
+        /**
+         * Helper to create a plucked harp sound
+         * @param freq Frequency in Hz
+         * @param startTime Start time in seconds
+         * @param duration Sustain/decay duration
+         * @param volume Peak gain value
+         */
+        const playHarpNote = (freq: number, startTime: number, duration: number, volume: number) => {
+            // Main tone (Sine for the fundamental)
+            const osc1 = ctx.createOscillator();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(freq, startTime);
 
-        // Connect nodes
-        oscillator.connect(gainNode);
-        gainNode.connect(ctx.destination);
+            // Harmonic (Triangle for the bright "pluck" texture)
+            const osc2 = ctx.createOscillator();
+            osc2.type = 'triangle';
+            osc2.frequency.setValueAtTime(freq * 2, startTime); // Octave harmonic
 
-        // Play sound
-        oscillator.start(now);
-        oscillator.stop(now + 0.15);
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0, startTime);
+
+            // Rapid attack
+            gain.gain.linearRampToValueAtTime(volume, startTime + 0.005);
+            // Exponential decay to create the ringing effect
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(ctx.destination);
+
+            // Simple echo to simulate harp resonance
+            const delay = ctx.createDelay();
+            delay.delayTime.setValueAtTime(0.05, startTime);
+            const delayGain = ctx.createGain();
+            delayGain.gain.setValueAtTime(volume * 0.2, startTime);
+
+            gain.connect(delay);
+            delay.connect(delayGain);
+            delayGain.connect(ctx.destination);
+
+            osc1.start(startTime);
+            osc2.start(startTime);
+            osc1.stop(startTime + duration);
+            osc2.stop(startTime + duration);
+        };
+
+        // Note 1: E5 (Short grace note - shorter and more subtle)
+        playHarpNote(note1Freq, now, 0.3, 0.05);
+
+        // Note 2: A5 (Main sustained note - shorter and more subtle)
+        playHarpNote(note2Freq, now + 0.08, 0.6, 0.06);
     }
 
     playSpawn(): void {
@@ -90,21 +110,32 @@ export class SoundManager {
 
         const now = ctx.currentTime;
 
-        // Create a subtle "pop" sound
-        const oscillator = ctx.createOscillator();
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(800, now);
-        oscillator.frequency.exponentialRampToValueAtTime(400, now + 0.05);
+        // Slot machine "ding" - quick bright chime
+        const ding1 = ctx.createOscillator();
+        ding1.type = 'sine';
+        ding1.frequency.setValueAtTime(1200, now);
 
-        const gainNode = ctx.createGain();
-        gainNode.gain.setValueAtTime(0.08, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+        const ding2 = ctx.createOscillator();
+        ding2.type = 'sine';
+        ding2.frequency.setValueAtTime(1600, now);
 
-        oscillator.connect(gainNode);
-        gainNode.connect(ctx.destination);
+        const gain1 = ctx.createGain();
+        gain1.gain.setValueAtTime(0.03, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
 
-        oscillator.start(now);
-        oscillator.stop(now + 0.05);
+        const gain2 = ctx.createGain();
+        gain2.gain.setValueAtTime(0.02, now);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+
+        ding1.connect(gain1);
+        ding2.connect(gain2);
+        gain1.connect(ctx.destination);
+        gain2.connect(ctx.destination);
+
+        ding1.start(now);
+        ding2.start(now);
+        ding1.stop(now + 0.04);
+        ding2.stop(now + 0.03);
     }
 
     playInvalidMove(): void {
@@ -115,20 +146,20 @@ export class SoundManager {
 
         const now = ctx.currentTime;
 
-        // Create a low "buzz" sound for invalid moves
-        const oscillator = ctx.createOscillator();
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(100, now);
+        // Subtle, gentle "tap" - neutral feedback, not annoying
+        const tap = ctx.createOscillator();
+        tap.type = 'sine'; // Soft sine wave
+        tap.frequency.setValueAtTime(400, now); // Mid-range, neutral tone
 
         const gainNode = ctx.createGain();
-        gainNode.gain.setValueAtTime(0.1, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        gainNode.gain.setValueAtTime(0.025, now); // Very quiet
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05); // Very short
 
-        oscillator.connect(gainNode);
+        tap.connect(gainNode);
         gainNode.connect(ctx.destination);
 
-        oscillator.start(now);
-        oscillator.stop(now + 0.1);
+        tap.start(now);
+        tap.stop(now + 0.05);
     }
 
     toggleMute(): boolean {
