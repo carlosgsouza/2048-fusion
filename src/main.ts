@@ -138,9 +138,10 @@ class App {
         if (moved) {
             if (winDetected) this.hasWon = true;
 
-            // Play harp sound for any merge
+            // Play harp sound with combo progression
             if (mergedValues.length > 0) {
-                this.soundManager.playMerge();
+                const highestMerge = Math.max(...mergedValues);
+                this.soundManager.playMerge(highestMerge);
             }
 
             this.isAnimating = true;

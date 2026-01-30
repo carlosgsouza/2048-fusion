@@ -3,6 +3,24 @@ export class SoundManager {
     private isMuted: boolean = false;
     private isInitialized: boolean = false;
 
+    // Pentatonic scale for combo progression (C-D-E-G-A pattern)
+    private readonly pentatonicScale: number[] = [
+        659.25,   // E5 (starting note)
+        783.99,   // G5
+        880.00,   // A5
+        1046.50,  // C6
+        1174.66,  // D6
+        1318.51,  // E6
+        1567.98,  // G6
+        1760.00   // A6
+    ];
+
+    // Combo tracking
+    private comboIndex: number = 0;
+    private lastMergeValue: number = 0;
+    private lastMergeTime: number = 0;
+    private readonly COMBO_TIMEOUT_MS: number = 1000;
+
 
     constructor() {
         this.loadMutePreference();
@@ -37,17 +55,36 @@ export class SoundManager {
         return this.audioContext;
     }
 
-    playMerge(): void {
+    playMerge(value: number): void {
         if (this.isMuted) return;
 
         const ctx = this.ensureAudioContext();
         if (!ctx) return;
 
         const now = ctx.currentTime;
+        const currentTime = Date.now();
 
-        // Fixed gentle harp sound
-        const note1Freq = 659.25; // E5
-        const note2Freq = 880.00; // A5
+        // Check if we should reset the combo (1 second timeout)
+        const timeSinceLastMerge = currentTime - this.lastMergeTime;
+        const shouldReset = timeSinceLastMerge > this.COMBO_TIMEOUT_MS;
+
+        if (shouldReset) {
+            // Reset to starting note after timeout
+            this.comboIndex = 0;
+        } else if (this.lastMergeValue > 0 && value > this.lastMergeValue) {
+            // Higher value: move up the scale
+            this.comboIndex = Math.min(this.comboIndex + 1, this.pentatonicScale.length - 1);
+        }
+        // Same or lower value: keep current note (no change)
+
+        // Update tracking
+        this.lastMergeValue = value;
+        this.lastMergeTime = currentTime;
+
+        // Get frequency from pentatonic scale based on combo
+        const baseFreq = this.pentatonicScale[this.comboIndex];
+        const note1Freq = baseFreq;
+        const note2Freq = baseFreq * 1.5; // Perfect fifth above
 
         /**
          * Helper to create a plucked harp sound
