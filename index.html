@@ -27,20 +27,20 @@
             </h1>
             <div class="scores">
                 <div class="score-box">
-                    <span class="score-label">Score</span>
+                    <span class="score-label" data-i18n="score">Score</span>
                     <span class="score-value" id="score">0</span>
                 </div>
                 <div class="score-box">
-                    <span class="score-label">Best</span>
+                    <span class="score-label" data-i18n="best">Best</span>
                     <span class="score-value" id="best-score">0</span>
                 </div>
             </div>
         </header>
 
         <div class="controls">
-            <button class="btn" id="new-game">New Game</button>
-            <button class="btn" id="mute-toggle" aria-label="Toggle Sound">Sound: ON</button>
-            <button class="btn" id="undo" disabled>Undo</button>
+            <button class="btn" id="new-game" data-i18n="newGame">New Game</button>
+            <button class="btn" id="mute-toggle" aria-label="Toggle Sound" data-i18n-key="soundOn">Sound: ON</button>
+            <button class="btn" id="undo" disabled data-i18n="undo">Undo</button>
         </div>
 
         <div class="game-container">
@@ -50,20 +50,23 @@
             <div class="game-message" id="game-message">
                 <p></p>
                 <div class="message-actions">
-                    <button class="btn" id="retry">Keep Playing</button>
-                    <button class="btn btn-secondary" id="win-new-game">New Game</button>
-                    <button class="btn btn-tertiary" id="game-over-undo">Undo</button>
+                    <button class="btn" id="retry" data-i18n="keepPlaying">Keep Playing</button>
+                    <button class="btn btn-secondary" id="win-new-game" data-i18n="newGame">New Game</button>
+                    <button class="btn btn-tertiary" id="game-over-undo" data-i18n="undo">Undo</button>
                 </div>
             </div>
         </div>
 
         <div class="instructions instructions-desktop">
-            <p>Use <strong>arrow keys</strong> to move tiles. Press <strong>Ctrl+Z</strong> to undo.</p>
+            <p data-i18n-html="instructionsDesktop">Use <strong>arrow keys</strong> to move tiles. Press
+                <strong>Ctrl+Z</strong> to undo.
+            </p>
         </div>
         <div class="instructions instructions-mobile">
-            <p><strong>Swipe</strong> to move tiles</p>
+            <p data-i18n-html="instructionsMobile"><strong>Swipe</strong> to move tiles</p>
         </div>
-        <a href="https://github.com/carlosgsouza/2048-fusion" class="about-link" target="_blank">About</a>
+        <a href="https://github.com/carlosgsouza/2048-fusion" class="about-link" target="_blank"
+            data-i18n="about">About</a>
     </div>
 
     <script type="module" src="/src/main.ts"></script>

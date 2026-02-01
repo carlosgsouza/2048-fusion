@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "Очки",
+    "best": "Лучший",
+    "newGame": "Новая Игра",
+    "undo": "Отменить",
+    "soundOn": "Звук: ВКЛ",
+    "soundOff": "Звук: ВЫКЛ",
+    "youWin": "Вы Выиграли!",
+    "gameOver": "Игра Окончена!",
+    "keepPlaying": "Продолжить",
+    "retry": "Попробовать Снова",
+    "instructionsDesktop": "Используйте <strong>стрелки</strong> для перемещения плиток. Нажмите <strong>Ctrl+Z</strong> для отмены.",
+    "instructionsMobile": "<strong>Проведите пальцем</strong> для перемещения плиток",
+    "about": "О игре",
+    "language": "Язык"
+}

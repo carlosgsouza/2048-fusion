@@ -4,12 +4,14 @@ import { Renderer } from './core/Renderer';
 import { Storage } from './core/Storage';
 import { InputHandler } from './core/InputHandler';
 import { SoundManager } from './core/SoundManager';
+import { I18n } from './core/I18n';
 import { GameState } from './core/types';
 
 class App {
     private engine: Engine;
     private renderer: Renderer;
     private soundManager: SoundManager;
+    private i18n: I18n;
     private history: GameState[] = [];
     private maxHistoryLength: number = 50;
     private isAnimating: boolean = false;
@@ -23,6 +25,7 @@ class App {
         this.engine = new Engine();
         this.renderer = new Renderer();
         this.soundManager = new SoundManager();
+        this.i18n = new I18n();
         this.bestScore = Storage.getBestScore();
 
         document.getElementById('new-game')?.addEventListener('click', () => this.newGame());
@@ -35,8 +38,35 @@ class App {
             document.getElementById('grid')!
         );
 
+        this.init();
+    }
+
+    private async init(): Promise<void> {
+        await this.i18n.init();
+        this.updateTranslations();
         this.updateMuteButton();
         this.initFromUrl();
+    }
+
+    private updateTranslations(): void {
+        // Update all elements with data-i18n attribute
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (key) {
+                el.textContent = this.i18n.t(key);
+            }
+        });
+
+        // Update elements with data-i18n-html attribute (for HTML content)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n-html');
+            if (key) {
+                (el as HTMLElement).innerHTML = this.i18n.t(key);
+            }
+        });
+
+        // Update mute button (special case)
+        this.updateMuteButton();
     }
 
     private initFromUrl(): void {
@@ -163,10 +193,10 @@ class App {
                     if (!this.engine.movesAvailable()) {
                         this.gameOver = true;
                         this.soundManager.playGameOver();
-                        this.renderer.showGameMessage('Game Over!', false, (kp) => this.handleRetry(kp), undefined, () => this.undo());
+                        this.renderer.showGameMessage(this.i18n.t('gameOver'), false, (kp) => this.handleRetry(kp), undefined, () => this.undo());
                     } else if (this.hasWon && !this.keepPlaying) {
                         this.soundManager.playVictory();
-                        this.renderer.showGameMessage('You Win!', true, (kp) => this.handleRetry(kp), () => this.newGame());
+                        this.renderer.showGameMessage(this.i18n.t('youWin'), true, (kp) => this.handleRetry(kp), () => this.newGame());
                     }
                 }, 100);
             }, 150);
@@ -243,7 +273,8 @@ class App {
     private updateMuteButton(): void {
         const muteButton = document.getElementById('mute-toggle');
         if (muteButton) {
-            muteButton.textContent = this.soundManager.isSoundMuted() ? 'Sound: OFF' : 'Sound: ON';
+            const key = this.soundManager.isSoundMuted() ? 'soundOff' : 'soundOn';
+            muteButton.textContent = this.i18n.t(key);
             muteButton.setAttribute('aria-label', this.soundManager.isSoundMuted() ? 'Unmute' : 'Mute');
         }
     }
