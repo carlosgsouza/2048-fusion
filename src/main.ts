@@ -243,7 +243,7 @@ class App {
     private updateMuteButton(): void {
         const muteButton = document.getElementById('mute-toggle');
         if (muteButton) {
-            muteButton.textContent = this.soundManager.isSoundMuted() ? '🔇' : '🔊';
+            muteButton.textContent = this.soundManager.isSoundMuted() ? 'Sound: OFF' : 'Sound: ON';
             muteButton.setAttribute('aria-label', this.soundManager.isSoundMuted() ? 'Unmute' : 'Mute');
         }
     }

@@ -123,6 +123,10 @@ body {
     transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
+#undo {
+    margin-left: auto; // Push to the right
+}
+
 .container.overlay-active .controls {
     filter: blur(4px);
     opacity: 0.3;
