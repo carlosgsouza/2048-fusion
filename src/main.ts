@@ -162,8 +162,10 @@ class App {
                     this.isAnimating = false;
                     if (!this.engine.movesAvailable()) {
                         this.gameOver = true;
+                        this.soundManager.playGameOver();
                         this.renderer.showGameMessage('Game Over!', false, (kp) => this.handleRetry(kp), undefined, () => this.undo());
                     } else if (this.hasWon && !this.keepPlaying) {
+                        this.soundManager.playVictory();
                         this.renderer.showGameMessage('You Win!', true, (kp) => this.handleRetry(kp), () => this.newGame());
                     }
                 }, 100);

@@ -17,7 +17,7 @@ export class SoundManager {
 
     // Combo tracking
     private comboIndex: number = 0;
-    private lastMergeValue: number = 0;
+    private highestSequenceValue: number = 0; // Track highest value in current sequence
     private lastMergeTime: number = 0;
     private readonly COMBO_TIMEOUT_MS: number = 1000;
 
@@ -71,14 +71,15 @@ export class SoundManager {
         if (shouldReset) {
             // Reset to starting note after timeout
             this.comboIndex = 0;
-        } else if (this.lastMergeValue > 0 && value > this.lastMergeValue) {
-            // Higher value: move up the scale
+            this.highestSequenceValue = value; // Start new sequence
+        } else if (value > this.highestSequenceValue) {
+            // New personal best in this sequence: move up the scale
             this.comboIndex = Math.min(this.comboIndex + 1, this.pentatonicScale.length - 1);
+            this.highestSequenceValue = value; // Update highest value
         }
-        // Same or lower value: keep current note (no change)
+        // Same or lower than highest: keep current note (no change)
 
         // Update tracking
-        this.lastMergeValue = value;
         this.lastMergeTime = currentTime;
 
         // Get frequency from pentatonic scale based on combo
@@ -147,32 +148,47 @@ export class SoundManager {
 
         const now = ctx.currentTime;
 
-        // Slot machine "ding" - quick bright chime
-        const ding1 = ctx.createOscillator();
-        ding1.type = 'sine';
-        ding1.frequency.setValueAtTime(1200, now);
+        // Wooden tile sliding sound - brief friction noise
+        const bufferSize = ctx.sampleRate * 0.05; // 50ms of noise
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
 
-        const ding2 = ctx.createOscillator();
-        ding2.type = 'sine';
-        ding2.frequency.setValueAtTime(1600, now);
+        // Generate filtered white noise for sliding friction
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * 0.3;
+        }
 
-        const gain1 = ctx.createGain();
-        gain1.gain.setValueAtTime(0.03, now);
-        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        const noiseSource = ctx.createBufferSource();
+        noiseSource.buffer = buffer;
 
-        const gain2 = ctx.createGain();
-        gain2.gain.setValueAtTime(0.02, now);
-        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+        // Low-pass filter for wooden sound character
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, now); // Warm, woody frequency
 
-        ding1.connect(gain1);
-        ding2.connect(gain2);
-        gain1.connect(ctx.destination);
-        gain2.connect(ctx.destination);
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.08, now); // Increased volume
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
 
-        ding1.start(now);
-        ding2.start(now);
-        ding1.stop(now + 0.04);
-        ding2.stop(now + 0.03);
+        noiseSource.connect(filter);
+        filter.connect(noiseGain);
+        noiseGain.connect(ctx.destination);
+
+        // Subtle click at the end (tile settling)
+        const click = ctx.createOscillator();
+        click.type = 'sine';
+        click.frequency.setValueAtTime(400, now + 0.04);
+
+        const clickGain = ctx.createGain();
+        clickGain.gain.setValueAtTime(0.06, now + 0.04); // Increased volume
+        clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+
+        click.connect(clickGain);
+        clickGain.connect(ctx.destination);
+
+        noiseSource.start(now);
+        click.start(now + 0.04);
+        click.stop(now + 0.06);
     }
 
     playInvalidMove(): void {
@@ -189,14 +205,14 @@ export class SoundManager {
         tap.frequency.setValueAtTime(400, now); // Mid-range, neutral tone
 
         const gainNode = ctx.createGain();
-        gainNode.gain.setValueAtTime(0.025, now); // Very quiet
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05); // Very short
+        gainNode.gain.setValueAtTime(0.08, now); // Increased volume
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.08); // Slightly longer
 
         tap.connect(gainNode);
         gainNode.connect(ctx.destination);
 
         tap.start(now);
-        tap.stop(now + 0.05);
+        tap.stop(now + 0.08);
     }
 
     toggleMute(): boolean {
@@ -212,5 +228,108 @@ export class SoundManager {
     setMuted(muted: boolean): void {
         this.isMuted = muted;
         localStorage.setItem('soundMuted', String(this.isMuted));
+    }
+
+    playVictory(): void {
+        if (this.isMuted) return;
+
+        const ctx = this.ensureAudioContext();
+        if (!ctx) return;
+
+        const now = ctx.currentTime;
+
+        // Extended casino jackpot sound - longer ascending celebration
+        const notes = [
+            { freq: 523.25, delay: 0 },      // C5
+            { freq: 659.25, delay: 0.24 },   // E5
+            { freq: 783.99, delay: 0.48 },   // G5
+            { freq: 1046.50, delay: 0.72 },  // C6
+            { freq: 1318.51, delay: 0.96 },  // E6
+            { freq: 1568.00, delay: 1.2 },   // G6
+            { freq: 2093.00, delay: 1.44 }   // C7 - super triumphant!
+        ];
+
+        notes.forEach(({ freq, delay }) => {
+            // Main bell tone
+            const osc1 = ctx.createOscillator();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(freq, now + delay);
+
+            // Harmonic richness
+            const osc2 = ctx.createOscillator();
+            osc2.type = 'triangle';
+            osc2.frequency.setValueAtTime(freq * 2, now + delay);
+
+            const gain1 = ctx.createGain();
+            gain1.gain.setValueAtTime(0, now + delay);
+            gain1.gain.linearRampToValueAtTime(0.15, now + delay + 0.02);
+            gain1.gain.exponentialRampToValueAtTime(0.001, now + delay + 2.4); // 3x longer sustain
+
+            const gain2 = ctx.createGain();
+            gain2.gain.setValueAtTime(0, now + delay);
+            gain2.gain.linearRampToValueAtTime(0.08, now + delay + 0.02);
+            gain2.gain.exponentialRampToValueAtTime(0.001, now + delay + 1.8);
+
+            osc1.connect(gain1);
+            osc2.connect(gain2);
+            gain1.connect(ctx.destination);
+            gain2.connect(ctx.destination);
+
+            osc1.start(now + delay);
+            osc2.start(now + delay);
+            osc1.stop(now + delay + 2.4);
+            osc2.stop(now + delay + 1.8);
+        });
+
+        // Add a final celebratory sustained high note
+        const finalNote = ctx.createOscillator();
+        finalNote.type = 'sine';
+        finalNote.frequency.setValueAtTime(2093.00, now + 1.68); // C7
+
+        const finalGain = ctx.createGain();
+        finalGain.gain.setValueAtTime(0, now + 1.68);
+        finalGain.gain.linearRampToValueAtTime(0.25, now + 1.72);
+        finalGain.gain.exponentialRampToValueAtTime(0.001, now + 3.6); // Long celebration
+
+        finalNote.connect(finalGain);
+        finalGain.connect(ctx.destination);
+        finalNote.start(now + 1.68);
+        finalNote.stop(now + 3.6);
+    }
+
+    playGameOver(): void {
+        if (this.isMuted) return;
+
+        const ctx = this.ensureAudioContext();
+        if (!ctx) return;
+
+        const now = ctx.currentTime;
+
+        // Extra goofy sad trombone "wah wah wah" - lower and longer
+        const sadNotes = [
+            { freq: 220, delay: 0 },       // A3 (lower octave)
+            { freq: 196, delay: 0.3 },     // G3
+            { freq: 174.61, delay: 0.6 },  // F3
+            { freq: 146.83, delay: 0.9 }   // D3 - super low and goofy
+        ];
+
+        sadNotes.forEach(({ freq, delay }) => {
+            const osc = ctx.createOscillator();
+            osc.type = 'sawtooth'; // Buzzy trombone-like sound
+            osc.frequency.setValueAtTime(freq, now + delay);
+            // Exaggerated downward wobble for extra goofiness
+            osc.frequency.exponentialRampToValueAtTime(freq * 0.85, now + delay + 0.3);
+
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0, now + delay);
+            gain.gain.linearRampToValueAtTime(0.1, now + delay + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.3);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now + delay);
+            osc.stop(now + delay + 0.3);
+        });
     }
 }
