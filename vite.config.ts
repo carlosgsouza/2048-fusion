@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: '/2048-fusion/',
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
@@ -46,3 +47,4 @@ export default defineConfig({
     sourcemap: true,
   }
 });
+
