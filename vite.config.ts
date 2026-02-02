@@ -5,8 +5,6 @@ export default defineConfig({
   base: '/2048-fusion/',
   plugins: [
     VitePWA({
-      registerType: null,
-      injectRegister: null,
       manifest: {
         name: '2048 Fusion',
         short_name: '2048',

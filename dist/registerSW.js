@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/2048-fusion/sw.js', { scope: '/2048-fusion/' })})}
