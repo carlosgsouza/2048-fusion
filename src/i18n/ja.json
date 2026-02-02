@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "スコア",
+    "best": "ベスト",
+    "newGame": "新しいゲーム",
+    "undo": "元に戻す",
+    "soundOn": "サウンド: ON",
+    "soundOff": "サウンド: OFF",
+    "youWin": "勝利！",
+    "gameOver": "ゲームオーバー！",
+    "keepPlaying": "続ける",
+    "retry": "もう一度",
+    "instructionsDesktop": "<strong>矢印キー</strong>でタイルを移動します。<strong>Ctrl+Z</strong>で元に戻します。",
+    "instructionsMobile": "<strong>スワイプ</strong>してタイルを移動",
+    "about": "について",
+    "language": "言語"
+}

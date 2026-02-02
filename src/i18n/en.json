@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "Score",
+    "best": "Best",
+    "newGame": "New Game",
+    "undo": "Undo",
+    "soundOn": "Sound: ON",
+    "soundOff": "Sound: OFF",
+    "youWin": "You Win!",
+    "gameOver": "Game Over!",
+    "keepPlaying": "Keep Playing",
+    "retry": "Try Again",
+    "instructionsDesktop": "Use <strong>arrow keys</strong> to move tiles. Press <strong>Ctrl+Z</strong> to undo.",
+    "instructionsMobile": "<strong>Swipe</strong> to move tiles",
+    "about": "About",
+    "language": "Language"
+}
