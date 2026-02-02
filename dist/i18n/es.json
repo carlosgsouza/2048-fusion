@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "Puntuación",
+    "best": "Mejor",
+    "newGame": "Nuevo Juego",
+    "undo": "Deshacer",
+    "soundOn": "Sonido: SÍ",
+    "soundOff": "Sonido: NO",
+    "youWin": "¡Ganaste!",
+    "gameOver": "¡Juego Terminado!",
+    "keepPlaying": "Seguir Jugando",
+    "retry": "Intentar de Nuevo",
+    "instructionsDesktop": "Usa las <strong>flechas del teclado</strong> para mover fichas. Presiona <strong>Ctrl+Z</strong> para deshacer.",
+    "instructionsMobile": "<strong>Desliza</strong> para mover fichas",
+    "about": "Acerca de",
+    "language": "Idioma"
+}

@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "Score",
+    "best": "Meilleur",
+    "newGame": "Nouveau Jeu",
+    "undo": "Annuler",
+    "soundOn": "Son: OUI",
+    "soundOff": "Son: NON",
+    "youWin": "Vous Avez Gagné!",
+    "gameOver": "Jeu Terminé!",
+    "keepPlaying": "Continuer",
+    "retry": "Réessayer",
+    "instructionsDesktop": "Utilisez les <strong>flèches du clavier</strong> pour déplacer les tuiles. Appuyez sur <strong>Ctrl+Z</strong> pour annuler.",
+    "instructionsMobile": "<strong>Glissez</strong> pour déplacer les tuiles",
+    "about": "À propos",
+    "language": "Langue"
+}

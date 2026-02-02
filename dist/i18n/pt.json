@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "Pontos",
+    "best": "Melhor",
+    "newGame": "Novo Jogo",
+    "undo": "Desfazer",
+    "soundOn": "Som: LIGADO",
+    "soundOff": "Som: DESLIGADO",
+    "youWin": "Você Venceu!",
+    "gameOver": "Fim de Jogo!",
+    "keepPlaying": "Continuar Jogando",
+    "retry": "Tentar Novamente",
+    "instructionsDesktop": "Use as <strong>setas do teclado</strong> para mover peças. Pressione <strong>Ctrl+Z</strong> para desfazer.",
+    "instructionsMobile": "<strong>Deslize</strong> para mover peças",
+    "about": "Sobre",
+    "language": "Idioma"
+}

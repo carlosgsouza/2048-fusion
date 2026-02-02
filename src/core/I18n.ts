@@ -58,7 +58,9 @@ export class I18n {
 
     private async loadTranslations(lang: Language): Promise<Translations> {
         try {
-            const response = await fetch(`/src/i18n/${lang}.json`);
+            // Use relative path that works with Vite's base configuration
+            const basePath = import.meta.env.BASE_URL || '/';
+            const response = await fetch(`${basePath}i18n/${lang}.json`);
             if (!response.ok) throw new Error(`Failed to load ${lang}`);
             return await response.json();
         } catch (error) {

@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "Punkte",
+    "best": "Beste",
+    "newGame": "Neues Spiel",
+    "undo": "Rückgängig",
+    "soundOn": "Ton: AN",
+    "soundOff": "Ton: AUS",
+    "youWin": "Du Hast Gewonnen!",
+    "gameOver": "Spiel Vorbei!",
+    "keepPlaying": "Weiterspielen",
+    "retry": "Erneut Versuchen",
+    "instructionsDesktop": "Verwende die <strong>Pfeiltasten</strong>, um Kacheln zu bewegen. Drücke <strong>Strg+Z</strong> zum Rückgängigmachen.",
+    "instructionsMobile": "<strong>Wischen</strong>, um Kacheln zu bewegen",
+    "about": "Über",
+    "language": "Sprache"
+}

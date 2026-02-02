@@ -1,0 +1,17 @@
+{
+    "title": "2048 Fusion",
+    "score": "分数",
+    "best": "最佳",
+    "newGame": "新游戏",
+    "undo": "撤销",
+    "soundOn": "声音：开",
+    "soundOff": "声音：关",
+    "youWin": "你赢了！",
+    "gameOver": "游戏结束！",
+    "keepPlaying": "继续游戏",
+    "retry": "重试",
+    "instructionsDesktop": "使用<strong>方向键</strong>移动方块。按<strong>Ctrl+Z</strong>撤销。",
+    "instructionsMobile": "<strong>滑动</strong>移动方块",
+    "about": "关于",
+    "language": "语言"
+}
