@@ -5,16 +5,8 @@ export default defineConfig({
   base: '/2048-fusion/',
   plugins: [
     VitePWA({
-      registerType: 'prompt',
-      injectRegister: false,
-      strategies: 'injectManifest',
-      injectManifest: {
-        injectionPoint: undefined
-      },
-      workbox: {
-        globPatterns: []
-      },
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      registerType: null,
+      injectRegister: null,
       manifest: {
         name: '2048 Fusion',
         short_name: '2048',
